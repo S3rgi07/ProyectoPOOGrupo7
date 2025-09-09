@@ -82,8 +82,7 @@ public class EstadoCursos {
     }
 
     
-    //  Limpia todas las listas (útil para pruebas o reinicio de estado).
-    
+    //  Limpia todas las listas 
     public void resetEstado() {
         cursosActuales.clear();
         cursosHistoria.clear();
