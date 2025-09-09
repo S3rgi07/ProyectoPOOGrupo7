@@ -39,10 +39,6 @@ public class Estudiante {
     public String getCorreo() {
         return correo;
     }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
     //se me ocurrió agregar validaciones en los setters :D
 public void setCorreo(String correo) {
         if (correo == null || !correo.contains("@") || correo.trim().isEmpty()) {
