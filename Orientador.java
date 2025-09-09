@@ -1,2 +1,2 @@
-public class orientador {
+public class Orientador {
 }

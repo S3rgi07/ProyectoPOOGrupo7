@@ -1,3 +1,3 @@
-public Class UVrate {
+public class UVrate {
     
 }
