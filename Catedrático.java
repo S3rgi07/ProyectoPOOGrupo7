@@ -16,4 +16,12 @@ public class Catedrático {
     public String getDescripcion(){
         return descripcion;
     }
+
+    public int getUpvotesCat() {
+        return upvotesCatedraticos;
+    }
+
+    public void setUpvotesCat(int upvotesCatedraticos) {
+    this.upvotesCatedraticos = upvotesCatedraticos;
+    }
 }
