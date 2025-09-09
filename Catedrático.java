@@ -1,9 +1,9 @@
-public class Catedrático {
+public class Catedratico {
     private String nombre;
     private String descripcion;
-    private int upvotesCatedratico;
+    private Upvotes upvotesCatedratico;
 
-    public Catedratico(String nombre, String descripcion, int upvotesCatedratico){ //Constructor
+    public Catedratico(String nombre, String descripcion, Upvotes upvotesCatedratico){ //Constructor
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.upvotesCatedratico = upvotesCatedratico;
@@ -17,11 +17,11 @@ public class Catedrático {
         return descripcion;
     }
 
-    public int getUpvotesCat() {
-        return upvotesCatedraticos;
+    public Upvotes getUpvotesCat() {
+        return upvotesCatedratico;
     }
 
-    public void setUpvotesCat(int upvotesCatedraticos) {
-    this.upvotesCatedraticos = upvotesCatedraticos;
+    public void setUpvotesCat(Upvotes upvotesCatedratico) {
+    this.upvotesCatedratico = upvotesCatedratico;
     }
 }
