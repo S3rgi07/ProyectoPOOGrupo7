@@ -1,4 +1,3 @@
-
 public class Estudiante {
 
     // atributos
@@ -7,8 +6,16 @@ public class Estudiante {
     private String correo;
     private EstadoCursos estadoCursos;
 
-    // construct
+    // constructor
     public Estudiante() {
+        this.estadoCursos = new EstadoCursos();
+    }
+
+    // constructor con parámetros
+    public Estudiante(String nombre, int carnet, String correo) {
+        this.nombre = nombre;
+        this.carnet = carnet;
+        this.correo = correo;
         this.estadoCursos = new EstadoCursos();
     }
 
@@ -43,5 +50,36 @@ public class Estudiante {
 
     public void setEstadoCursos(EstadoCursos estadoCursos) {
         this.estadoCursos = estadoCursos;
+    }
+
+    // metódos para manejar cursos a través de estadoCursos :D
+
+
+    // Inicia un curso en el estado de este estudiante
+
+    public boolean iniciarCurso(Curso curso) {
+        return estadoCursos.iniciarCurso(curso);
+    }
+
+    // Finaliza un curso en el estado de este estudiante
+    public boolean finalizarCurso(Curso curso) {
+        return estadoCursos.finalizarCurso(curso);
+    }
+    // Verifica si el estudiante está actualmente cursando el curso
+    public boolean estaCursando(Curso curso) {
+        return estadoCursos.estaCursando(curso);
+    }
+
+    // Verifica si el estudiante ya ha cursado el curso antes
+    public boolean yaCursado(Curso curso) {
+        return estadoCursos.yaCursado(curso);
+    }
+    @Override
+    public String toString() {
+        return "Estudiante{" +
+                "nombre='" + nombre + '\'' +
+                ", carnet=" + carnet +
+                ", correo='" + correo + '\'' +
+                '}';
     }
 }
