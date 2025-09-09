@@ -26,4 +26,15 @@ public class Curso {
         return upvotesCurso;
     }
     
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setUpvotesCur(Upvotes upvotesCurso) {  
+        this.upvotesCurso = upvotesCurso;
+    }
 }
