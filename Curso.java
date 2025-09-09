@@ -37,4 +37,12 @@ public class Curso {
     public void setUpvotesCur(Upvotes upvotesCurso) {  
         this.upvotesCurso = upvotesCurso;
     }
+
+    public String getNombre(){
+        return nombre;
+    }
+
+    public void setNombre(){
+        this.nombre = nombre;
+    }
 }
