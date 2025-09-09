@@ -13,5 +13,17 @@ public class Curso {
         this.competencias = competencias;
         this.tipo = tipo;
         this.upvotesCurso = upvotesCurso;
+
+        public int getCodigo(){
+        return codigo;
     }
+
+    public String getTipo(){
+        return tipo;
+    }
+
+    public Upvotes getUpvotes(){
+        return upvotesCurso;
+    }
+    
 }
