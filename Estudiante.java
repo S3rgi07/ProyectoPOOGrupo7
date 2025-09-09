@@ -43,6 +43,13 @@ public class Estudiante {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
+    //se me ocurrió agregar validaciones en los setters :D
+public void setCorreo(String correo) {
+        if (correo == null || !correo.contains("@") || correo.trim().isEmpty()) {
+            throw new IllegalArgumentException("El correo es inválido.");
+        }
+        this.correo = correo.trim();
+    }
 
     public EstadoCursos getEstadoCursos() {
         return estadoCursos;
@@ -52,7 +59,7 @@ public class Estudiante {
         this.estadoCursos = estadoCursos;
     }
 
-    // metódos para manejar cursos a través de estadoCursos :D
+    // son metódos para manejar cursos a través de estadoCursos :D
 
 
     // Inicia un curso en el estado de este estudiante
