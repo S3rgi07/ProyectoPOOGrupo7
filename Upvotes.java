@@ -13,4 +13,20 @@ public class Upvotes {
         this.fecha = LocalDate.now(); //asigna la fecha automáticamente
     }
     
+    //Getters 
+    public Catedratico getCatedratico() {
+        return this.catedratico;
+    }
+
+    public Estudiante getEstudiante() {
+        return this.estudiante;
+    }
+
+    public Curso getCurso() {
+        return this.curso;
+    }
+
+    public LocalDate getFecha() {
+        return this.fecha;
+    }
 }
