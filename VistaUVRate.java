@@ -45,7 +45,8 @@ public VistaUVRate() {
 
         tabbedPane.addTab("Cursos", panelCursos);
 
-        
+        add(tabbedPane);
+        setVisible(true);
     }
 
 }
