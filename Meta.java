@@ -7,4 +7,10 @@ public class Meta {
         this.nombre = nombre;
         this.competencias = competencias;
     }
+
+    // Métodos
+    public void MostrarResultaods() {
+        System.out.println("Meta: " + nombre);
+        System.out.println("Competencias asociadas a la meta: " + competencias);
+    }
 }
