@@ -10,4 +10,14 @@ public class ConexionUVRate {
     private static final String USER = "root";  
     private static final String PASSWORD = "";  
     
+    public static Connection getConnection() {
+    Connection conn = null;
+    try {
+        conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        System.out.println("Conexión a UVRate establecida correctamente.");
+    } catch (SQLException e) {
+        System.out.println("Error al conectar con la base de datos.");
+        e.printStackTrace();
+    }
+    return conn;
 }
