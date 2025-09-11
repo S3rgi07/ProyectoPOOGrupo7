@@ -14,4 +14,20 @@ public class VistaUVRate extends JFrame {
     private JTable tablaCatedraticos;
     private JTextArea areaDetalleCatedratico;
     private JButton btnCalificarCatedratico;
+
+    // Componentes para metas
+    private JComboBox<String> comboMetas;
+    private JButton btnGenerarRecomendaciones;
+    private JTextArea areaRecomendaciones;
+
+    
+public VistaUVRate() {
+
+        //Creación inicial de la ventana de UVRate
+        setTitle("UVRate");
+        setSize(800, 600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+}
+
 }
