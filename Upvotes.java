@@ -29,4 +29,21 @@ public class Upvotes {
     public LocalDate getFecha() {
         return this.fecha;
     }
+
+    //Setters
+    public void setCatedrcatico(catedratico catedratico) {
+        this.catedratico = catedratico;
+    }
+
+    public void setEstudiante(Estudiante estudiante) {
+        this.estudiante = estudiante;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
 }
