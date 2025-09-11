@@ -35,12 +35,21 @@ public List<Curso> sugerirCursos(String metaNombre) {
 
     return sugeridos;
 
-// Métodos para agregar cursos y metas
-public void agregarMeta(Meta meta) {
-    metas.add(meta);
+// Métodos para agregar metas y cursos
+    public void agregarMeta(Meta meta) {
+        metas.add(meta);
     }
 
-public void agregarCurso(Curso curso) {
-     curso.add(curso);
+    public void agregarCurso(Curso curso) {
+        curso.add(curso);
+    }
+
+// Getters
+    public List<Meta> getMetas() {
+        return metas;
+    }
+
+    public List<Curso> getCursos() {
+        return curso;
     }
 }
