@@ -77,12 +77,6 @@ public void setCorreo(String correo) {
     public boolean yaCursado(Curso curso) {
         return estadoCursos.yaCursado(curso);
     }
-    @Override
-    public String toString() {
-        return "Estudiante{" +
-                "nombre='" + nombre + '\'' +
-                ", carnet=" + carnet +
-                ", correo='" + correo + '\'' +
-                '}';
-    }
+    
+    
 }
