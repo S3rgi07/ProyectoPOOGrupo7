@@ -30,6 +30,10 @@ public class Upvotes {
         return this.fecha;
     }
 
+    public int getUpvotes() {
+        return this.Upvotes; //método temporal, la versión final va conectada a la base de datos
+    }
+
     //Setters
     public void setCatedrcatico(catedratico catedratico) {
         this.catedratico = catedratico;
