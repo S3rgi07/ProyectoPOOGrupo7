@@ -15,5 +15,23 @@ public Orientador() {
 // Método que sugiere los cursos al estudiante según la meta que tenga.
 public List<Curso> sugerirCursos(String metaNombre) {
     List<Curso> sugeridos = new ArrayList<>();
+
+
+// Para poder buscar las metas por nombre
+        for (Meta meta : metas) {
+            String metasNombre;
+            if (meta.getNombre().equalsIgnoreCase(metasNombre)) {
+                String competenciaMeta = meta.getCompetencias();
+
+// Para poder buscar cursos que coincidan con las competencias del estudiante.
+            for (Curso curso : cursos) {
+                    if (curso.getCompetencias().contains(competenciaMeta)) {
+                        sugeridos.add(curso);
+                    }
+                }
+            }
+        }
     }
+
+    return sugeridos;
 }
