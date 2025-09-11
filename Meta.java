@@ -9,7 +9,7 @@ public class Meta {
     }
 
     // Métodos
-    public void MostrarResultados() {
+    public void MostrarRequisitos() {
         System.out.println("Meta: " + nombre);
         System.out.println("Competencias asociadas a la meta: " + competencias);
     }
