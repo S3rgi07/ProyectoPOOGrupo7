@@ -5,6 +5,7 @@ public class Upvotes {
     private Estudiante estudiante;
     private Curso curso;
     private LocalDate fecha;
+    private int upvotes;
     
     public Upvotes(Catedratico catedratico, Estudiante estudiante, Curso curso) {
         this.catedratico = catedratico;
@@ -31,7 +32,7 @@ public class Upvotes {
     }
 
     public int getUpvotes() {
-        return this.Upvotes; //método temporal, la versión final va conectada a la base de datos
+        return this.upvotes; //método temporal, la versión final va conectada a la base de datos
     }
 
     //Setters
