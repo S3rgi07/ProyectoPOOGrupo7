@@ -20,4 +20,16 @@ public class ConexionUVRate {
         e.printStackTrace();
     }
     return conn;
-}
+    }
+
+    public static void closeConnection(Connection conn) {
+        if (conn != null) {
+            try {
+                conn.close();
+                System.out.println("🔒 Conexión cerrada.");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}   
