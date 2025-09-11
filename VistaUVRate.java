@@ -45,6 +45,19 @@ public VistaUVRate() {
 
         tabbedPane.addTab("Cursos", panelCursos);
 
+        //Tablero 2: Catedráticos
+        JPanel panelCatedraticos = new JPanel(new BorderLayout());
+        tablaCatedraticos = new JTable();
+        areaDetalleCatedratico = new JTextArea("Detalles del catedrático...");
+        btnCalificarCatedratico = new JButton("Calificar catedrático");
+        panelCatedraticos.add(new JScrollPane(tablaCatedraticos), BorderLayout.CENTER);
+        JPanel panelCatInferior = new JPanel(new BorderLayout());
+        panelCatInferior.add(new JScrollPane(areaDetalleCatedratico), BorderLayout.CENTER);
+        panelCatInferior.add(btnCalificarCatedratico, BorderLayout.SOUTH);
+        panelCatedraticos.add(panelCatInferior, BorderLayout.SOUTH);
+
+        tabbedPane.addTab("Catedráticos", panelCatedraticos);
+
         add(tabbedPane);
         setVisible(true);
     }
