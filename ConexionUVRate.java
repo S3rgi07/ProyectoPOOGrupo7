@@ -26,7 +26,7 @@ public class ConexionUVRate {
         if (conn != null) {
             try {
                 conn.close();
-                System.out.println("🔒 Conexión cerrada.");
+                System.out.println("Conexión cerrada.");
             } catch (SQLException e) {
                 e.printStackTrace();
             }

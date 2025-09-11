@@ -19,7 +19,8 @@ public class Curso {
 
     public int getCodigo(){
         return codigo;
-}
+    }
+    
     public String getTipo(){
         return tipo;
     }
