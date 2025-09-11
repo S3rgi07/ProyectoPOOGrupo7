@@ -28,6 +28,24 @@ public VistaUVRate() {
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-}
+
+        //Creación del tabbedPane para categorizar mejor cada opción
+        tabbedPane = new JTabbedPane();
+
+        //Tablero 1: Cursos
+        JPanel panelCursos = new JPanel(new BorderLayout());
+        tablaCursos = new JTable(); // Aquí se cargarán los cursos desde Controller
+        areaDetalleCurso = new JTextArea("Detalles del curso...");
+        btnCalificarCurso = new JButton("Calificar curso");
+        panelCursos.add(new JScrollPane(tablaCursos), BorderLayout.CENTER);
+        JPanel panelCursosInferior = new JPanel(new BorderLayout());
+        panelCursosInferior.add(new JScrollPane(areaDetalleCurso), BorderLayout.CENTER);
+        panelCursosInferior.add(btnCalificarCurso, BorderLayout.SOUTH);
+        panelCursos.add(panelCursosInferior, BorderLayout.SOUTH);
+
+        tabbedPane.addTab("Cursos", panelCursos);
+
+        
+    }
 
 }
