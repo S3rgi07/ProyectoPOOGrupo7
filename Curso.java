@@ -14,10 +14,12 @@ public class Curso {
         this.tipo = tipo;
         this.upvotesCurso = upvotesCurso;
 
-        public int getCodigo(){
-        return codigo;
+        
     }
 
+    public int getCodigo(){
+        return codigo;
+}
     public String getTipo(){
         return tipo;
     }
@@ -45,5 +47,4 @@ public class Curso {
     public void setNombre(){
         this.nombre = nombre;
     }
-}
 }

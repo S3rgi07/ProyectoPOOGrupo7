@@ -35,7 +35,7 @@ public class Upvotes {
     }
 
     //Setters
-    public void setCatedrcatico(catedratico catedratico) {
+    public void setCatedrcatico(Catedratico catedratico) {
         this.catedratico = catedratico;
     }
 
