@@ -22,4 +22,13 @@ public class Meta {
     public String getCompetencias() {
         return competencias;
     }
+
+    // Setters
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setCompetencias(String competencias) {
+        this.competencias = competencias;
+    }
 }
