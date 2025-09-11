@@ -16,7 +16,7 @@ public class ConexionUVRate {
         try {
             // Intentamos conectar directamente a la base de datos
             conn = DriverManager.getConnection(URL, USER, PASSWORD);
-            System.out.println("Conexión a UVRate establecida correctamente.");
+            System.out.println("Conexión a UVRate exitosa!.");
         } catch (SQLException e) {
             if (e.getErrorCode() == 1049) { // Error que hace alusión a base de datos inexistente
                 System.out.println("Base de datos no existe. Creando UVRate...");
@@ -29,7 +29,7 @@ public class ConexionUVRate {
 
                     // Conexión con la nueva base de datos
                     conn = DriverManager.getConnection(URL, USER, PASSWORD);
-                    System.out.println("Conexión a UVRate establecida correctamente.");
+                    System.out.println("Conexión a UVRate exitosa!");
 
                     // Si no existen ya las tablas, se crean
                     ejecutarSchema(conn);
