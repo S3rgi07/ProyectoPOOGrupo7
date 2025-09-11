@@ -50,6 +50,15 @@ public List<Curso> sugerirCursos(String metaNombre) {
     }
 
     public List<Curso> getCursos() {
-        return curso;
+        return cursos;
+    }
+
+// Setters
+    public void setMetas(List<Meta> metas) {
+        this.metas = metas;
+    }
+
+    public void setCursos(List<Curso> cursos) {
+    this.cursos = cursos;
     }
 }
