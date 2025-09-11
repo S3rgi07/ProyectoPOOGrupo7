@@ -31,9 +31,10 @@ public List<Curso> sugerirCursos(String metaNombre) {
                 }
             }
         }
+        return sugeridos;
     }
 
-    return sugeridos;
+    
 
 // Métodos para agregar metas y cursos
     public void agregarMeta(Meta meta) {
