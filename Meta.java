@@ -9,8 +9,17 @@ public class Meta {
     }
 
     // Métodos
-    public void MostrarResultaods() {
+    public void MostrarResultados() {
         System.out.println("Meta: " + nombre);
         System.out.println("Competencias asociadas a la meta: " + competencias);
+    }
+
+    // Getters
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getCompetencias() {
+        return competencias;
     }
 }
