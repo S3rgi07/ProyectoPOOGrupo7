@@ -66,6 +66,16 @@ public class UVrate {
         }
     }
 
+    public List<Curso> obtenerCursosRecomendados(Orientador orientador) {
+        try {
+            return orientador.getCursos();
+            //método temporal, conexión a base de datos
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
     //Getters
     public Estudiante getEstudiante() { 
         return this.estudiante; 
