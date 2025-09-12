@@ -22,6 +22,15 @@ public class UVrate {
         ConexionUVRate.getConnection();
     }
 
+    public void crearEstudiante(String nombre, String correo, String contraseña, int carnet) {
+        try {
+            Estudiante estudiante = new Estudiante(String nombre, int carnet, String correo)
+            //método temporal, conexión a base de datos
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     //Getters
     public Estudiante getEstudiante() { 
         return this.estudiante; 
@@ -55,4 +64,6 @@ public class UVrate {
     public void setOrientador(Orientador orientador) {
         this.orientador = orientador;
     }
+
+
 }
