@@ -36,7 +36,15 @@ public class UVrate {
             Curso curso = new Curso(int codigo, String nombre, String descripcion, String competencias, String tipo, Upvotes upvotesCurso)
             //método temporal, conexión a base de datos
         } catch (Exception e) {
-            e.printStackTrace(e);
+            e.printStackTrace();
+        }
+    }
+
+    public void calificar(int usuarioId int cursoId, int catedraticoId, Upvotes upvote) {
+        try {
+            //método temporal, conexión a base de datos
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
