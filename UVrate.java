@@ -38,4 +38,21 @@ public class UVrate {
     public Orientador getOrientador() { 
         return this.orientador; 
     }
+
+    //Setters
+    public void setEstudiante(Estudiante estudiante) {
+        this.estudiante = estudiante;
+    }
+
+    public void setCusro(Curso curso) {
+        this.curso = curso;
+    }
+
+    public void setCatedrcatico(Catedratico catedratico) {
+        this.catedratico = catedratico;
+    }
+
+    public void setOrientador(Orientador orientador) {
+        this.orientador = orientador;
+    }
 }
