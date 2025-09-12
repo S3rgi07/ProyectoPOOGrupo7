@@ -1,10 +1,13 @@
+import java.util.List;
+import java.util.ArrayList;
+
 public class UVrate {
     private Estudiante estudiante;
     private Curso curso;
     private Catedrático catedratico;
     private Orientador orientador;
     
-    public UVRate() {
+    public UVrate() {
         this.estudiante = null;
         this.curso = null;
         this.catedratico = null;
@@ -24,7 +27,7 @@ public class UVrate {
 
     public void crearEstudiante(String nombre, String correo, String contraseña, int carnet) {
         try {
-            Estudiante estudiante = new Estudiante(String nombre, int carnet, String correo)
+            Estudiante estudiante = new Estudiante(nombre, carnet, correo)
             //método temporal, conexión a base de datos
         } catch (Exception e) {
             e.printStackTrace();
@@ -33,14 +36,14 @@ public class UVrate {
 
     public void crearCurso(int codigo, String nombre, String descripcion, String competencias, String tipo, Upvotes upvotesCurso) {
         try {
-            Curso curso = new Curso(int codigo, String nombre, String descripcion, String competencias, String tipo, Upvotes upvotesCurso)
+            Curso curso = new Curso(codigo, nombre, descripcion, competencias, tipo, upvotesCurso)
             //método temporal, conexión a base de datos
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void calificar(int usuarioId int cursoId, int catedraticoId, Upvotes upvote) {
+    public void calificar(int usuarioId, int cursoId, int catedraticoId, Upvotes upvote) {
         try {
             //método temporal, conexión a base de datos
         } catch (Exception e) {
