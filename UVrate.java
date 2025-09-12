@@ -17,4 +17,8 @@ public class UVrate {
         this.catedratico = catedratico;
         this.orientador = orientador != null ? orientador : new Orientador();
     }
+
+    public void iniciar() {
+        ConexionUVRate.getConnection();
+    }
 }
