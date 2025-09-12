@@ -8,7 +8,7 @@ public class UVrate {
         this.estudiante = null;
         this.curso = null;
         this.catedratico = null;
-        this.orientador = null;
+        this.orientador = new Orientador();
     }
 
     public UVRate(Estudiante estudiante, Curso curso, Catedratico catedratico, Orientador orientador) {
