@@ -10,4 +10,11 @@ public class UVrate {
         this.catedratico = null;
         this.orientador = null;
     }
+
+    public UVRate(Estudiante estudiante, Curso curso, Catedratico catedratico, Orientador orientador) {
+        this.estudiante = estudiante;
+        this.curso = curso;
+        this.catedratico = catedratico;
+        this.orientador = orientador != null ? orientador : new Orientador();
+    }
 }
