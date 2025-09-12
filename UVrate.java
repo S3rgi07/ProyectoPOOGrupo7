@@ -31,6 +31,15 @@ public class UVrate {
         }
     }
 
+    public void crearCurso(int codigo, String nombre, String descripcion, String competencias, String tipo, Upvotes upvotesCurso) {
+        try {
+            Curso curso = new Curso(int codigo, String nombre, String descripcion, String competencias, String tipo, Upvotes upvotesCurso)
+            //método temporal, conexión a base de datos
+        } catch (Exception e) {
+            e.printStackTrace(e);
+        }
+    }
+
     //Getters
     public Estudiante getEstudiante() { 
         return this.estudiante; 
