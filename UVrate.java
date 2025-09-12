@@ -21,4 +21,21 @@ public class UVrate {
     public void iniciar() {
         ConexionUVRate.getConnection();
     }
+
+    //Getters
+    public Estudiante getEstudiante() { 
+        return this.estudiante; 
+    }
+
+    public Curso getCurso() { 
+        return this.curso; 
+    }
+
+    public Catedratico getCatedratico() { 
+        return this.catedratico; 
+    }
+
+    public Orientador getOrientador() { 
+        return this.orientador; 
+    }
 }
