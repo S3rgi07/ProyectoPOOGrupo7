@@ -50,4 +50,15 @@ public class Upvotes {
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
+
+    // "setUpvotes" permite modificar los datos del voto completo
+    public void setUpvotes(Catedratico catedratico, Estudiante estudiante, LocalDate fecha, Curso curso) {
+        if (catedratico == null || estudiante == null || curso == null || fecha == null) {
+            throw new IllegalArgumentException("Ningún campo de Upvotes puede ser nulo.");
+        }
+        this.catedratico = catedratico;
+        this.estudiante = estudiante;
+        this.fecha = LocalDate.now();
+        this.curso = curso;
+    }
 }
