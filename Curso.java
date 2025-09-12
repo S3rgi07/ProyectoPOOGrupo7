@@ -48,4 +48,12 @@ public class Curso {
     public void setNombre(){
         this.nombre = nombre;
     }
+
+    public void setCompetencias(String competencias){
+        this.competencias = competencias;
+    }
+
+    public String getCompetencias(){
+        return competencias;
+    }
 }
