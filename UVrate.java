@@ -48,6 +48,24 @@ public class UVrate {
         }
     }
 
+    public void darUpvote(int usuarioId, int catedraticoId) {
+        try {
+            //método temporal, conexión a base de datos
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void contarUpvotes(int catedraticoId) {
+        try {
+            return 0;
+            //método temporal, conexión a base de datos
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
     //Getters
     public Estudiante getEstudiante() { 
         return this.estudiante; 
