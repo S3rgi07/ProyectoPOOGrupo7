@@ -14,7 +14,7 @@ public class UVrate {
         this.orientador = new Orientador();
     }
 
-    public UVRate(Estudiante estudiante, Curso curso, Catedratico catedratico, Orientador orientador) {
+    public UVrate(Estudiante estudiante, Curso curso, Catedratico catedratico, Orientador orientador) {
         this.estudiante = estudiante;
         this.curso = curso;
         this.catedratico = catedratico;
