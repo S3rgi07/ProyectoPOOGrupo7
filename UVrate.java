@@ -27,7 +27,7 @@ public class UVrate {
 
     public void crearEstudiante(String nombre, String correo, String contraseña, int carnet) {
         try {
-            Estudiante estudiante = new Estudiante(nombre, carnet, correo)
+            Estudiante estudiante = new Estudiante(nombre, carnet, correo);
             //método temporal, conexión a base de datos
         } catch (Exception e) {
             e.printStackTrace();
@@ -36,7 +36,7 @@ public class UVrate {
 
     public void crearCurso(int codigo, String nombre, String descripcion, String competencias, String tipo, Upvotes upvotesCurso) {
         try {
-            Curso curso = new Curso(codigo, nombre, descripcion, competencias, tipo, upvotesCurso)
+            Curso curso = new Curso(codigo, nombre, descripcion, competencias, tipo, upvotesCurso);
             //método temporal, conexión a base de datos
         } catch (Exception e) {
             e.printStackTrace();
