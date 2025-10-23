@@ -19,7 +19,7 @@ public List<Curso> sugerirCursos(String metaNombre) {
 
 // Para poder buscar las metas por nombre
         for (Meta meta : metas) {
-            String metasNombre;
+            String metasNombre = "";
             if (meta.getNombre().equalsIgnoreCase(metasNombre)) {
                 String competenciaMeta = meta.getCompetencias();
 
@@ -42,7 +42,7 @@ public List<Curso> sugerirCursos(String metaNombre) {
     }
 
     public void agregarCurso(Curso curso) {
-        curso.add(curso);
+        cursos.add(curso);
     }
 
 // Getters
