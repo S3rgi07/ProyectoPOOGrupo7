@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class UVrate {
     private Estudiante estudiante;
     private Curso curso;
-    private Catedrático catedratico;
+    private Catedratico catedratico;
     private Orientador orientador;
     
     public UVrate() {
@@ -61,11 +61,9 @@ public class UVrate {
 
     public void contarUpvotes(int catedraticoId) {
         try {
-            return 0;
             //método temporal, conexión a base de datos
         } catch (Exception e) {
             e.printStackTrace();
-            return 0;
         }
     }
 
