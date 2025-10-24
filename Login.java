@@ -68,6 +68,8 @@ public class Login implements ActionListener { //el action Listener "escucha" lo
 			userID.setText("");
 			userpassword.setText("");
 		}
+		//Falta un segundo "if" aca, que es que pasa cuando el log in es correcto, pero para eso necesito la base de datos.
+	}
 }
 
 
