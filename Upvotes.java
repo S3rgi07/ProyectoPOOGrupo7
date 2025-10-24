@@ -1,4 +1,6 @@
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Upvotes {
     private Catedratico catedratico;
@@ -12,6 +14,8 @@ public class Upvotes {
         this.curso = curso;
         this.fecha = LocalDate.now(); //asigna la fecha automáticamente
     }
+
+    private List<Upvotes> upvotesCatedraticos = new ArrayList<>();
     
     //Getters 
     public Catedratico getCatedratico() {

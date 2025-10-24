@@ -111,5 +111,36 @@ public class UVRate {
         this.orientador = orientador;
     }
 
+    // Toggle Upvote: si ya tiene, lo quita; si no, lo agrega
+public boolean toggleUpvoteCatedratico(Estudiante estudiante, Catedratico c) {
+    if(estudiante == null || c == null) return false;
+
+    if(c.getUpvotesCat().hasUpvoted(estudiante)) {
+        c.getUpvotesCat().removeUpvote(estudiante);
+        return false; // ahora ya no tiene like
+    } else {
+        c.getUpvotesCat().addUpvote(estudiante);
+        return true; // ahora tiene like
+    }
+}
+
+// Obtener recomendaciones de maestros para un curso
+public List<Catedratico> getRecomendacionesPorCurso(Curso curso) {
+    List<Catedratico> maestros = new ArrayList<>();
+    // Aquí se obtiene la lista de catedráticos que imparten el curso
+    // Por ejemplo, a partir de BD o relación en curso
+    // Ordenamos por Upvotes descendente
+    maestros = obtenerCatedraticosPorCurso(curso);
+    maestros.sort((a,b) -> b.getUpvotesCat().getValor() - a.getUpvotesCat().getValor());
+    return maestros;
+}
+
+// Método auxiliar
+private List<Catedratico> obtenerCatedraticosPorCurso(Curso c){
+    // Conexión a BD para obtener catedráticos que imparten c
+    // Retornar lista de Catedratico
+    return new ArrayList<>();
+}
+
 
 }
