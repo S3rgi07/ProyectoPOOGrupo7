@@ -1,65 +1,205 @@
 import javax.swing.*;
+import javax.swing.border.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.*;
 
 public class VistaUVRate extends JFrame {
 
-    private JTabbedPane tabbedPane;
+    private JPanel sidebar;
+    private JPanel contentPanel;
+    private JButton btnCursos, btnCatedraticos;
+    private JTable tabla;
+    private JTextArea detalles;
+    private JButton btnUpvote;
 
-    // Componentes para cursos
-    private JTable tablaCursos;
-    private JTextArea areaDetalleCurso;
-    private JButton btnCalificarCurso;
+    private DefaultTableModel cursosModel, catedraticosModel;
 
-    // Componentes para catedráticos
-    private JTable tablaCatedraticos;
-    private JTextArea areaDetalleCatedratico;
-    private JButton btnCalificarCatedratico;
-
-    // Componentes para metas
-    private JComboBox<String> comboMetas;
-    private JButton btnGenerarRecomendaciones;
-    private JTextArea areaRecomendaciones;
-
-    
-public VistaUVRate() {
-
-        //Creación inicial de la ventana de UVRate
-        setTitle("UVRate");
-        setSize(800, 600);
+    public VistaUVRate() {
+        setTitle("UVRate Dashboard");
+        setSize(900, 600);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
+        setLayout(new BorderLayout());
 
-        //Creación del tabbedPane para categorizar mejor cada opción
-        tabbedPane = new JTabbedPane();
+        // ----------------------
+        // Sidebar
+        // ----------------------
+        sidebar = new JPanel();
+        sidebar.setPreferredSize(new Dimension(150, 0));
+        sidebar.setBackground(new Color(40, 44, 52));
+        sidebar.setLayout(new GridLayout(10, 1, 0, 10));
+        sidebar.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 5));
 
-        //Tablero 1: Cursos
-        JPanel panelCursos = new JPanel(new BorderLayout());
-        tablaCursos = new JTable(); // Aquí se cargarán los cursos desde Controller
-        areaDetalleCurso = new JTextArea("Detalles del curso...");
-        btnCalificarCurso = new JButton("Calificar curso");
-        panelCursos.add(new JScrollPane(tablaCursos), BorderLayout.CENTER);
-        JPanel panelCursosInferior = new JPanel(new BorderLayout());
-        panelCursosInferior.add(new JScrollPane(areaDetalleCurso), BorderLayout.CENTER);
-        panelCursosInferior.add(btnCalificarCurso, BorderLayout.SOUTH);
-        panelCursos.add(panelCursosInferior, BorderLayout.SOUTH);
+        btnCursos = createSidebarButton("Cursos");
+        btnCatedraticos = createSidebarButton("Catedráticos");
 
-        tabbedPane.addTab("Cursos", panelCursos);
+        sidebar.add(btnCursos);
+        sidebar.add(btnCatedraticos);
 
-        //Tablero 2: Catedráticos
-        JPanel panelCatedraticos = new JPanel(new BorderLayout());
-        tablaCatedraticos = new JTable();
-        areaDetalleCatedratico = new JTextArea("Detalles del catedrático...");
-        btnCalificarCatedratico = new JButton("Calificar catedrático");
-        panelCatedraticos.add(new JScrollPane(tablaCatedraticos), BorderLayout.CENTER);
-        JPanel panelCatInferior = new JPanel(new BorderLayout());
-        panelCatInferior.add(new JScrollPane(areaDetalleCatedratico), BorderLayout.CENTER);
-        panelCatInferior.add(btnCalificarCatedratico, BorderLayout.SOUTH);
-        panelCatedraticos.add(panelCatInferior, BorderLayout.SOUTH);
+        add(sidebar, BorderLayout.WEST);
 
-        tabbedPane.addTab("Catedráticos", panelCatedraticos);
+        // ----------------------
+        // Content Panel
+        // ----------------------
+        contentPanel = new JPanel(new BorderLayout());
+        contentPanel.setBackground(new Color(245, 245, 245));
+        contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        add(contentPanel, BorderLayout.CENTER);
 
-        add(tabbedPane);
+        // ----------------------
+        // Tablas de datos
+        // ----------------------
+        cursosModel = new DefaultTableModel(
+                new Object[][]{
+                        {"Curso 1", "Profesor A", 20},
+                        {"Curso 2", "Profesor B", 15}
+                },
+                new Object[]{"Nombre", "Catedrático", "Upvotes"}
+        );
+
+        catedraticosModel = new DefaultTableModel(
+                new Object[][]{
+                        {"Profesor A", "Matemáticas", 20},
+                        {"Profesor B", "Historia", 18}
+                },
+                new Object[]{"Nombre", "Materia", "Upvotes"}
+        );
+
+        // Inicializamos con cursos
+        showCursos();
+
+        // ----------------------
+        // Botones de navegación
+        // ----------------------
+        btnCursos.addActionListener(e -> showCursos());
+        btnCatedraticos.addActionListener(e -> showCatedraticos());
+
         setVisible(true);
     }
 
+    // ----------------------
+    // Funciones para mostrar secciones
+    // ----------------------
+    private void showCursos() {
+        contentPanel.removeAll();
+
+        tabla = new JTable(cursosModel);
+        tabla.setRowHeight(25);
+        tabla.getTableHeader().setBackground(new Color(70,130,180));
+        tabla.getTableHeader().setForeground(Color.WHITE);
+
+        JScrollPane scrollTabla = new JScrollPane(tabla);
+
+        detalles = new JTextArea("Selecciona un curso para ver detalles...");
+        detalles.setEditable(false);
+        detalles.setLineWrap(true);
+        detalles.setWrapStyleWord(true);
+        detalles.setBorder(new RoundedBorder(10));
+        detalles.setBackground(Color.WHITE);
+
+        btnUpvote = new JButton("Upvote");
+        styleButton(btnUpvote, new Color(0, 168, 150));
+        btnUpvote.addActionListener(e -> upvoteSelectedRow(tabla));
+
+        JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollTabla, detalles);
+        split.setDividerLocation(300);
+        split.setResizeWeight(0.7);
+        split.setBorder(null);
+
+        contentPanel.add(split, BorderLayout.CENTER);
+        contentPanel.add(btnUpvote, BorderLayout.SOUTH);
+        contentPanel.revalidate();
+        contentPanel.repaint();
+    }
+
+    private void showCatedraticos() {
+        contentPanel.removeAll();
+
+        tabla = new JTable(catedraticosModel);
+        tabla.setRowHeight(25);
+        tabla.getTableHeader().setBackground(new Color(70,130,180));
+        tabla.getTableHeader().setForeground(Color.WHITE);
+
+        JScrollPane scrollTabla = new JScrollPane(tabla);
+
+        detalles = new JTextArea("Selecciona un catedrático para ver detalles...");
+        detalles.setEditable(false);
+        detalles.setLineWrap(true);
+        detalles.setWrapStyleWord(true);
+        detalles.setBorder(new RoundedBorder(10));
+        detalles.setBackground(Color.WHITE);
+
+        btnUpvote = new JButton("Upvote");
+        styleButton(btnUpvote, new Color(9, 132, 227));
+        btnUpvote.addActionListener(e -> upvoteSelectedRow(tabla));
+
+        JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, scrollTabla, detalles);
+        split.setDividerLocation(300);
+        split.setResizeWeight(0.7);
+        split.setBorder(null);
+
+        contentPanel.add(split, BorderLayout.CENTER);
+        contentPanel.add(btnUpvote, BorderLayout.SOUTH);
+        contentPanel.revalidate();
+        contentPanel.repaint();
+    }
+
+    // ----------------------
+    // Incrementar Upvotes
+    // ----------------------
+    private void upvoteSelectedRow(JTable tabla) {
+        int row = tabla.getSelectedRow();
+        if (row != -1) {
+            int col = tabla.getColumnCount() - 1; // última columna: Upvotes
+            int current = (int) tabla.getValueAt(row, col);
+            tabla.setValueAt(current + 1, row, col);
+        }
+    }
+
+    // ----------------------
+    // Estilo moderno para botones
+    // ----------------------
+    private void styleButton(JButton btn, Color bg) {
+        btn.setFocusPainted(false);
+        btn.setBackground(bg);
+        btn.setForeground(Color.WHITE);
+        btn.setBorder(new RoundedBorder(10));
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }
+
+    private JButton createSidebarButton(String text) {
+        JButton btn = new JButton(text);
+        btn.setFocusPainted(false);
+        btn.setForeground(Color.WHITE);
+        btn.setBackground(new Color(50,50,60));
+        btn.setBorder(new EmptyBorder(10,10,10,10));
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn.setBackground(new Color(70,70,90));
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn.setBackground(new Color(50,50,60));
+            }
+        });
+        return btn;
+    }
+
+    // ----------------------
+    // Borde redondeado para textarea y botones
+    // ----------------------
+    class RoundedBorder extends AbstractBorder {
+        private int radius;
+        RoundedBorder(int r){ radius = r; }
+        @Override
+        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height){
+            g.setColor(Color.LIGHT_GRAY);
+            g.drawRoundRect(x,y,width-1,height-1,radius,radius);
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(VistaUVRate::new);
+    }
 }

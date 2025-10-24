@@ -14,10 +14,11 @@ public class Login implements ActionListener {
     JPasswordField userPassword = new JPasswordField();
     JLabel messageLabel = new JLabel();
 
+	// Constructor del login
     public Login() {
         frame.setSize(450, 350);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
+        frame.setLocationRelativeTo(null); // Centrar ventana
         frame.setUndecorated(true); // Quitar borde nativo
         frame.setLayout(new BorderLayout());
 
