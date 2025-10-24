@@ -38,12 +38,47 @@ public class Registro implements ActionListener {
         messageLabel.setHorizontalAlignment(SwingConstants.CENTER); //centra el texto horizontalmente dentro del botón
 
         //gabriel, pon aquí tu código
+
+            // Añadir componentes al frame
+        frame.add(usuarioLabel);
+        frame.add(usuarioID);
+        frame.add(passwordLabel);
+        frame.add(userpassword);
+        frame.add(passwordLabel2);
+        frame.add(userpassword2);
+        frame.add(registrarBoton);
+        frame.add(messageLabel);
+
+        // Configuración general de la ventana
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(420, 420);
+        frame.setLayout(null);
+        frame.setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
+        if (e.getSource() == registrarBoton) {
+            String user = usuarioID.getText();
+            String pass1 = String.valueOf(userpassword.getPassword());
+            String pass2 = String.valueOf(userpassword2.getPassword());
+
+            if (user.isEmpty() || pass1.isEmpty() || pass2.isEmpty()) {
+                messageLabel.setText("Por favor, complete todos los campos");
+                messageLabel.setForeground(java.awt.Color.RED);
+            } else if (!pass1.equals(pass2)) {
+                messageLabel.setText("Las contraseñas no coinciden");
+                messageLabel.setForeground(java.awt.Color.RED);
+            } else {
+                messageLabel.setText("¡Registro exitoso!");
+                messageLabel.setForeground(java.awt.Color.GREEN);
+            }
     }
+    }
+
+
+
+
+    
     
 }

@@ -1,20 +1,20 @@
 import java.util.List;
 import java.util.ArrayList;
 
-public class UVrate {
+public class UVRate {
     private Estudiante estudiante;
     private Curso curso;
     private Catedratico catedratico;
     private Orientador orientador;
     
-    public UVrate() {
+    public UVRate() {
         this.estudiante = null;
         this.curso = null;
         this.catedratico = null;
         this.orientador = new Orientador();
     }
 
-    public UVrate(Estudiante estudiante, Curso curso, Catedratico catedratico, Orientador orientador) {
+    public UVRate(Estudiante estudiante, Curso curso, Catedratico catedratico, Orientador orientador) {
         this.estudiante = estudiante;
         this.curso = curso;
         this.catedratico = catedratico;
