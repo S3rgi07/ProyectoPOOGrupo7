@@ -55,7 +55,13 @@ public class Login implements ActionListener { //el action Listener "escucha" lo
 	// no
 	@Override
 	public void actionPerformed(ActionEvent e)
-    }
+    }{ //Que pasa si se apacha alguno de los botones
+		
+		if(e.getSource() == registroboton) {
+			// Si presionan "Registrate", se abre la ventana de registro
+			frame.dispose(); // Cierra la ventana actual
+			new Registro(); // Abre la ventana de registro
+		}
 }
 
 
