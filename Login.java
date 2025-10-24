@@ -16,6 +16,18 @@ public class Login implements ActionListener { //el action Listener "escucha" lo
 	JLabel passwordLabel = new JLabel("password: ");
 	JLabel messageLabel = new JLabel();
 	
+
+	Login(){
+		//Configuracion de las propiedades
+		messageLabel.setBounds(125, 250, 250, 35); //El mensaje al final
+		messageLabel.setFont(new Font("Arial", Font.ITALIC, 20)); 
+		
+		userLabel.setBounds(50, 100, 75, 25); //Salen las etiquetas de userID y clave
+		passwordLabel.setBounds(50, 150, 75, 25);
+		
+		userID.setBounds(125, 100, 200, 25); //Cajita de textos
+		userpassword.setBounds(125, 150, 200, 25);
+    }
 }
 
 
