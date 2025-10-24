@@ -14,8 +14,6 @@ public class Upvotes {
         this.curso = curso;
         this.fecha = LocalDate.now(); //asigna la fecha automáticamente
     }
-
-    private List<Upvotes> upvotesCatedraticos = new ArrayList<>();
     
     //Getters 
     public Catedratico getCatedratico() {

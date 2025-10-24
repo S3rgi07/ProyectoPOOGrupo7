@@ -6,7 +6,9 @@ public class UVRate {
     private Curso curso;
     private Catedratico catedratico;
     private Orientador orientador;
-     private List<Upvotes> upvotesCatedraticos = new ArrayList<>();
+    private List<Catedratico> catedraticos = new ArrayList<>();
+    private List<Curso> cursos = new ArrayList<>();
+    private List<Upvotes> upvotesCatedraticos = new ArrayList<>();
     
     public UVRate() {
         this.estudiante = null;
@@ -136,6 +138,9 @@ public boolean toggleUpvote(Estudiante e, Catedratico c) {
         return true; // ahora tiene like
     }
 }
+// GETTERS para VistaUVRate
+    public List<Catedratico> obtenerTodosCatedraticos() { return catedraticos; }
+    public List<Curso> obtenerTodosCursos() { return cursos; }
 
 
 
