@@ -6,6 +6,7 @@ public class UVRate {
     private Curso curso;
     private Catedratico catedratico;
     private Orientador orientador;
+     private List<Upvotes> upvotesCatedraticos = new ArrayList<>();
     
     public UVRate() {
         this.estudiante = null;
@@ -24,6 +25,7 @@ public class UVRate {
     public void iniciar() {
         ConexionUVRate.getConnection();
     }
+    
 
     public void crearEstudiante(String nombre, String correo, String contraseña, int carnet) {
         try {
@@ -111,36 +113,30 @@ public class UVRate {
         this.orientador = orientador;
     }
 
-    // Toggle Upvote: si ya tiene, lo quita; si no, lo agrega
-public boolean toggleUpvoteCatedratico(Estudiante estudiante, Catedratico c) {
-    if(estudiante == null || c == null) return false;
+// Contar Upvotes de un catedrático
+public int contarUpvotes(Catedratico c) {
+    return (int) upvotesCatedraticos.stream()
+        .filter(u -> u.getCatedratico().equals(c))
+        .count();
+}
 
-    if(c.getUpvotesCat().hasUpvoted(estudiante)) {
-        c.getUpvotesCat().removeUpvote(estudiante);
+// Verificar si un estudiante ya votó
+public boolean yaVoto(Estudiante e, Catedratico c) {
+    return upvotesCatedraticos.stream()
+        .anyMatch(u -> u.getCatedratico().equals(c) && u.getEstudiante().equals(e));
+}
+
+// Toggle Upvote
+public boolean toggleUpvote(Estudiante e, Catedratico c) {
+    if (yaVoto(e, c)) {
+        upvotesCatedraticos.removeIf(u -> u.getCatedratico().equals(c) && u.getEstudiante().equals(e));
         return false; // ahora ya no tiene like
     } else {
-        c.getUpvotesCat().addUpvote(estudiante);
+        upvotesCatedraticos.add(new Upvotes(c, e, null)); // null para curso
         return true; // ahora tiene like
     }
 }
 
-// Obtener recomendaciones de maestros para un curso
-public List<Catedratico> getRecomendacionesPorCurso(Curso curso) {
-    List<Catedratico> maestros = new ArrayList<>();
-    // Aquí se obtiene la lista de catedráticos que imparten el curso
-    // Por ejemplo, a partir de BD o relación en curso
-    // Ordenamos por Upvotes descendente
-    maestros = obtenerCatedraticosPorCurso(curso);
-    maestros.sort((a,b) -> b.getUpvotesCat().getValor() - a.getUpvotesCat().getValor());
-    return maestros;
-}
-
-// Método auxiliar
-private List<Catedratico> obtenerCatedraticosPorCurso(Curso c){
-    // Conexión a BD para obtener catedráticos que imparten c
-    // Retornar lista de Catedratico
-    return new ArrayList<>();
-}
 
 
 }
