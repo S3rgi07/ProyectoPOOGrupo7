@@ -27,6 +27,16 @@ public class Login implements ActionListener { //el action Listener "escucha" lo
 		
 		userID.setBounds(125, 100, 200, 25); //Cajita de textos
 		userpassword.setBounds(125, 150, 200, 25);
+
+        loginboton.setBounds(125, 200, 100, 25); //Boton de login
+		loginboton.addActionListener(this); //El actionListener
+		
+		resetbuton.setBounds(225, 200, 100, 25); //Boton de reset
+		resetbuton.addActionListener(this); //El actionListener
+
+		registroboton.setBounds(150, 300, 100, 25); //Boton de registrar
+		registroboton.addActionListener(this); //El actionListener
+		
     }
 }
 
