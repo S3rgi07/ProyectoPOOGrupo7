@@ -142,6 +142,24 @@ public boolean toggleUpvote(Estudiante e, Catedratico c) {
     public List<Catedratico> obtenerTodosCatedraticos() { return catedraticos; }
     public List<Curso> obtenerTodosCursos() { return cursos; }
 
+// Agrega un curso al sistema
+    public void agregarCurso(Curso c) { cursos.add(c); }
 
+ // Cuenta los Upvotes de un catedrático
+    public int contarUpvotes(Catedratico c) {
+        return (int) upvotesCatedraticos.stream()
+                .filter(u -> u.getCatedratico().equals(c))
+                .count();
+    }
 
+    // Obtener recomendaciones de catedráticos por curso, ordenados por Upvotes
+    public List<Catedratico> getRecomendacionesPorCurso(Curso curso) {
+        List<Catedratico> list = new ArrayList<>();
+        for (Catedratico c : catedraticos) {
+            // Para simplificar, agregamos todos los catedráticos y luego filtramos según los Upvotes
+            list.add(c);
+        }
+        list.sort((a, b) -> contarUpvotes(b) - contarUpvotes(a));
+        return list;
+    }
 }
