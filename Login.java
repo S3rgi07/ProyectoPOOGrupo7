@@ -50,14 +50,10 @@ public class Login implements ActionListener { //el action Listener "escucha" lo
 		frame.setSize(420, 420);
 		frame.setLayout(null); //No queremos layout
 		frame.setVisible(true);
-
-    //TONY PEGA TU PARTE ACÁ ABAJO!!!! 
-	// no
-	@Override
-	public void actionPerformed(ActionEvent e)
 	}
-	
-	{ //Que pasa si se apacha alguno de los botones
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		//Que pasa si se apacha alguno de los botones
 		
 		if(e.getSource() == registroboton) {
 			// Si presionan "Registrate", se abre la ventana de registro

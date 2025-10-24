@@ -39,5 +39,11 @@ public class Registro implements ActionListener {
 
         //gabriel, pon aquí tu código
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
+    }
     
 }
