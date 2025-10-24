@@ -37,6 +37,21 @@ public class Login implements ActionListener { //el action Listener "escucha" lo
 		registroboton.setBounds(150, 300, 100, 25); //Boton de registrar
 		registroboton.addActionListener(this); //El actionListener
 		
+        //Lo agrega a la vista
+		frame.add(loginboton);
+		frame.add(registroboton);
+		frame.add(resetbuton);
+		frame.add(userLabel);
+		frame.add(passwordLabel);
+		frame.add(userID);
+		frame.add(userpassword);
+		frame.add(messageLabel);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Para que se cierre la ventana
+		frame.setSize(420, 420);
+		frame.setLayout(null); //No queremos layout
+		frame.setVisible(true);
+
+    //TONY PEGA TU PARTE ACÁ ABAJO!!!! 
     }
 }
 
