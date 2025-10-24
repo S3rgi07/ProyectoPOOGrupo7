@@ -1,73 +1,154 @@
-import java.awt.Font; //Yo
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.border.*;
+import java.sql.*;
 
-import javax.swing.*; //Importa toda la libreria
+public class Login implements ActionListener {
 
-public class Login implements ActionListener { //el action Listener "escucha" lo que el usuario hace, lo vamos a usar para los botones
-	
-	JFrame frame = new JFrame();
-	JButton loginboton = new JButton("Login");
-	JButton resetbuton = new JButton("Reset");
-	JButton registroboton = new JButton("Registrate");
-	JTextField userID = new JTextField();
-	JPasswordField userpassword = new JPasswordField();
-	JLabel userLabel = new JLabel("userID: ");
-	JLabel passwordLabel = new JLabel("password: ");
-	JLabel messageLabel = new JLabel();
-	
+    JFrame frame = new JFrame("Login UVRate");
+    JButton loginButton = new JButton("Login");
+    JButton resetButton = new JButton("Reset");
+    JButton registroButton = new JButton("Registrarse");
+    JTextField userID = new JTextField();
+    JPasswordField userPassword = new JPasswordField();
+    JLabel messageLabel = new JLabel();
 
-	Login(){
-		//Configuracion de las propiedades
-		messageLabel.setBounds(125, 250, 250, 35); //El mensaje al final
-		messageLabel.setFont(new Font("Arial", Font.ITALIC, 20)); 
-		
-		userLabel.setBounds(50, 100, 75, 25); //Salen las etiquetas de userID y clave
-		passwordLabel.setBounds(50, 150, 75, 25);
-		
-		userID.setBounds(125, 100, 200, 25); //Cajita de textos
-		userpassword.setBounds(125, 150, 200, 25);
+    public Login() {
+        frame.setSize(450, 350);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setUndecorated(true); // Quitar borde nativo
+        frame.setLayout(new BorderLayout());
 
-        loginboton.setBounds(125, 200, 100, 25); //Boton de login
-		loginboton.addActionListener(this); //El actionListener
-		
-		resetbuton.setBounds(225, 200, 100, 25); //Boton de reset
-		resetbuton.addActionListener(this); //El actionListener
+        // Panel principal con degradado
+        JPanel mainPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2d = (Graphics2D) g;
+                GradientPaint gp = new GradientPaint(0, 0, new Color(85, 239, 196), 0, getHeight(), new Color(0, 184, 148));
+                g2d.setPaint(gp);
+                g2d.fillRect(0, 0, getWidth(), getHeight());
+            }
+        };
+        mainPanel.setLayout(null);
 
-		registroboton.setBounds(150, 300, 100, 25); //Boton de registrar
-		registroboton.addActionListener(this); //El actionListener
-		
-        //Lo agrega a la vista
-		frame.add(loginboton);
-		frame.add(registroboton);
-		frame.add(resetbuton);
-		frame.add(userLabel);
-		frame.add(passwordLabel);
-		frame.add(userID);
-		frame.add(userpassword);
-		frame.add(messageLabel);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Para que se cierre la ventana
-		frame.setSize(420, 420);
-		frame.setLayout(null); //No queremos layout
-		frame.setVisible(true);
-	}
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		//Que pasa si se apacha alguno de los botones
-		
-		if(e.getSource() == registroboton) {
-			// Si presionan "Registrate", se abre la ventana de registro
-			frame.dispose(); // Cierra la ventana actual
-			new Registro(); // Abre la ventana de registro
-		}
-		if(e.getSource()==resetbuton) {
-			userID.setText("");
-			userpassword.setText("");
-		}
-		//Falta un segundo "if" aca, que es que pasa cuando el log in es correcto, pero para eso necesito la base de datos.
-	}
+        // Labels y campos
+        JLabel title = new JLabel("Bienvenido");
+        title.setFont(new Font("Verdana", Font.BOLD, 24));
+        title.setForeground(Color.WHITE);
+        title.setBounds(140, 20, 200, 40);
+        mainPanel.add(title);
 
-	
+        JLabel userLabel = new JLabel("Correo:");
+        userLabel.setForeground(Color.WHITE);
+        userLabel.setBounds(50, 90, 80, 25);
+        mainPanel.add(userLabel);
+
+        userID.setBounds(150, 90, 230, 30);
+        userID.setBorder(new RoundedBorder(10));
+        mainPanel.add(userID);
+
+        JLabel passwordLabel = new JLabel("Contraseña:");
+        passwordLabel.setForeground(Color.WHITE);
+        passwordLabel.setBounds(50, 140, 100, 25);
+        mainPanel.add(passwordLabel);
+
+        userPassword.setBounds(150, 140, 230, 30);
+        userPassword.setBorder(new RoundedBorder(10));
+        mainPanel.add(userPassword);
+
+        // Mensaje
+        messageLabel.setBounds(50, 190, 330, 25);
+        messageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        messageLabel.setForeground(Color.YELLOW);
+        mainPanel.add(messageLabel);
+
+        // Botones
+        loginButton.setBounds(50, 230, 100, 35);
+        styleButton(loginButton, new Color(0, 168, 150));
+        mainPanel.add(loginButton);
+
+        resetButton.setBounds(160, 230, 100, 35);
+        styleButton(resetButton, new Color(255, 118, 117));
+        mainPanel.add(resetButton);
+
+        registroButton.setBounds(270, 230, 110, 35);
+        styleButton(registroButton, new Color(9, 132, 227));
+        mainPanel.add(registroButton);
+
+        // Acciones
+        loginButton.addActionListener(this);
+        resetButton.addActionListener(this);
+        registroButton.addActionListener(this);
+
+        frame.add(mainPanel, BorderLayout.CENTER);
+        frame.setVisible(true);
+    }
+
+    // Botones redondeados y color
+    private void styleButton(JButton btn, Color bg) {
+        btn.setFocusPainted(false);
+        btn.setBackground(bg);
+        btn.setForeground(Color.WHITE);
+        btn.setBorder(new RoundedBorder(10));
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }
+
+    // Borde redondeado para campos y botones
+    class RoundedBorder extends AbstractBorder {
+        private int radius;
+        RoundedBorder(int r) { radius = r; }
+        @Override
+        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+            g.setColor(Color.WHITE);
+            g.drawRoundRect(x, y, width-1, height-1, radius, radius);
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == registroButton) {
+            frame.dispose();
+            new Registro();
+        }
+        if (e.getSource() == resetButton) {
+            userID.setText("");
+            userPassword.setText("");
+            messageLabel.setText("");
+        }
+        if (e.getSource() == loginButton) {
+            String correo = userID.getText();
+            String pass = String.valueOf(userPassword.getPassword());
+            try (Connection conn = ConexionUVRate.getConnection()) {
+                String sql = "SELECT * FROM usuario WHERE correo = ? AND contraseña = ?";
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                stmt.setString(1, correo);
+                stmt.setString(2, pass);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+    messageLabel.setText("¡Inicio exitoso!");
+    messageLabel.setForeground(Color.GREEN);
+    
+    // Esperar un momento y abrir VistaUVRate
+    SwingUtilities.invokeLater(() -> {
+        frame.dispose(); // cerrar ventana de login
+        new VistaUVRate(); // abrir vista principal
+    });
+} else {
+    messageLabel.setText("Datos incorrectos");
+    messageLabel.setForeground(Color.RED);
 }
 
+            } catch (Exception ex) {
+                messageLabel.setText("Error de conexión");
+                messageLabel.setForeground(Color.RED);
+                ex.printStackTrace();
+            }
+        }
+    }
 
+    public static void main(String[] args) {
+        new Login();
+    }
+}
