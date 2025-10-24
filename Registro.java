@@ -13,6 +13,7 @@ public class Registro implements ActionListener {
     JPasswordField userpassword2 = new JPasswordField();
 
     //Etiquetas
+    JLabel usuarioLabel = new JLabel("Ingrese nombre de usuario:");
     JLabel passwordLabel = new JLabel("Ingrese clave:");
     JLabel passwordLabel2 = new JLabel("Confirmar clave:");
     JLabel messageLabel = new JLabel();
@@ -35,4 +36,8 @@ public class Registro implements ActionListener {
         messageLabel.setBounds(100, 260, 250, 35);
         messageLabel.setFont(new Font("Arial", Font.ITALIC, 14));
         messageLabel.setHorizontalAlignment(SwingConstants.CENTER); //centra el texto horizontalmente dentro del botón
+
+        //gabriel, pon aquí tu código
+    }
+    
 }
