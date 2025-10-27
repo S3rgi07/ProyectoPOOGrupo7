@@ -14,12 +14,11 @@ public class Login implements ActionListener {
     JPasswordField userPassword = new JPasswordField();
     JLabel messageLabel = new JLabel();
 
-	// Constructor del login
     public Login() {
         frame.setSize(450, 350);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null); // Centrar ventana
-        frame.setUndecorated(true); // Quitar borde nativo
+        frame.setLocationRelativeTo(null);
+        frame.setUndecorated(true);
         frame.setLayout(new BorderLayout());
 
         // Panel principal con degradado
@@ -27,20 +26,22 @@ public class Login implements ActionListener {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2d = (Graphics2D) g;
-                GradientPaint gp = new GradientPaint(0, 0, new Color(85, 239, 196), 0, getHeight(), new Color(0, 184, 148));
+                // Cambié el celeste por un verde claro
+                GradientPaint gp = new GradientPaint(0, 0, new Color(144, 238, 144), 0, getHeight(), new Color(0, 184, 148));
                 g2d.setPaint(gp);
                 g2d.fillRect(0, 0, getWidth(), getHeight());
             }
         };
         mainPanel.setLayout(null);
 
-        // Labels y campos
+        // Título
         JLabel title = new JLabel("Bienvenido");
         title.setFont(new Font("Verdana", Font.BOLD, 24));
         title.setForeground(Color.WHITE);
         title.setBounds(140, 20, 200, 40);
         mainPanel.add(title);
 
+        // Labels y campos
         JLabel userLabel = new JLabel("Correo:");
         userLabel.setForeground(Color.WHITE);
         userLabel.setBounds(50, 90, 80, 25);
@@ -113,33 +114,46 @@ public class Login implements ActionListener {
             frame.dispose();
             new Registro();
         }
+
         if (e.getSource() == resetButton) {
             userID.setText("");
             userPassword.setText("");
             messageLabel.setText("");
         }
+
         if (e.getSource() == loginButton) {
             String correo = userID.getText();
             String pass = String.valueOf(userPassword.getPassword());
+
             try (Connection conn = ConexionUVRate.getConnection()) {
                 String sql = "SELECT * FROM usuario WHERE correo = ? AND contraseña = ?";
                 PreparedStatement stmt = conn.prepareStatement(sql);
                 stmt.setString(1, correo);
                 stmt.setString(2, pass);
+
                 ResultSet rs = stmt.executeQuery();
-                if (rs.next()) {
-    messageLabel.setText("¡Inicio exitoso!");
-    messageLabel.setForeground(Color.GREEN);
-    
-    // Esperar un momento y abrir VistaUVRate
-    SwingUtilities.invokeLater(() -> {
-        frame.dispose(); // cerrar ventana de login
-        new VistaUVRate(); // abrir vista principal
-    });
-} else {
-    messageLabel.setText("Datos incorrectos");
-    messageLabel.setForeground(Color.RED);
-}
+                if(rs.next()) {
+                    messageLabel.setText("Inicio exitoso!");
+                    messageLabel.setForeground(Color.GREEN);
+
+                    // Creamos estudiante usando datos de BD
+                    String nombre = rs.getString("nombre");
+                    // Para carnet, si no existe en BD, usar 0
+                    int carnet = 0;
+                    try { carnet = rs.getInt("carnet"); } catch(Exception ex) {}
+                    Estudiante estudiante = new Estudiante(nombre, carnet, correo);
+
+                    // Creamos el controlador con el estudiante
+                    UVRate controlador = new UVRate(estudiante);
+
+                    // Abrimos VistaUVRate
+                    new VistaUVRate(controlador, estudiante);
+
+                    frame.dispose();
+                } else {
+                    messageLabel.setText("Datos incorrectos");
+                    messageLabel.setForeground(Color.RED);
+                }
 
             } catch (Exception ex) {
                 messageLabel.setText("Error de conexión");

@@ -48,3 +48,4 @@ CREATE TABLE upvote (
   FOREIGN KEY (catedratico_id) REFERENCES catedratico(id) ON DELETE CASCADE,
   UNIQUE (usuario_id, catedratico_id)
 ) ENGINE=InnoDB;
+

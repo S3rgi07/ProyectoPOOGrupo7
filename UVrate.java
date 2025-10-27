@@ -1,147 +1,172 @@
-import java.util.List;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class UVRate {
+
     private Estudiante estudiante;
-    private Curso curso;
-    private Catedratico catedratico;
-    private Orientador orientador;
-    private List<Catedratico> catedraticos = new ArrayList<>();
-    private List<Curso> cursos = new ArrayList<>();
-    private List<Upvotes> upvotesCatedraticos = new ArrayList<>();
-    
-    public UVRate() {
-        this.estudiante = null;
-        this.curso = null;
-        this.catedratico = null;
-        this.orientador = new Orientador();
-    }
 
-    public UVRate(Estudiante estudiante, Curso curso, Catedratico catedratico, Orientador orientador) {
-        this.estudiante = estudiante;
-        this.curso = curso;
-        this.catedratico = catedratico;
-        this.orientador = orientador != null ? orientador : new Orientador();
-    }
-
-    public void iniciar() {
-        ConexionUVRate.getConnection();
-    }
-    
-
-    public void crearEstudiante(String nombre, String correo, String contraseña, int carnet) {
-        try {
-            Estudiante estudiante = new Estudiante(nombre, carnet, correo);
-            //método temporal, conexión a base de datos
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void crearCurso(int codigo, String nombre, String descripcion, String competencias, String tipo, Upvotes upvotesCurso) {
-        try {
-            Curso curso = new Curso(codigo, nombre, descripcion, competencias, tipo, upvotesCurso);
-            //método temporal, conexión a base de datos
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void calificar(int usuarioId, int cursoId, int catedraticoId, Upvotes upvote) {
-        try {
-            //método temporal, conexión a base de datos
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void darUpvote(int usuarioId, int catedraticoId) {
-        try {
-            //método temporal, conexión a base de datos
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void contarUpvotes(int catedraticoId) {
-        try {
-            //método temporal, conexión a base de datos
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public List<Curso> obtenerCursosRecomendados(Orientador orientador) {
-        try {
-            return orientador.getCursos();
-            //método temporal, conexión a base de datos
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
-    }
-
-    //Getters
-    public Estudiante getEstudiante() { 
-        return this.estudiante; 
-    }
-
-    public Curso getCurso() { 
-        return this.curso; 
-    }
-
-    public Catedratico getCatedratico() { 
-        return this.catedratico; 
-    }
-
-    public Orientador getOrientador() { 
-        return this.orientador; 
-    }
-
-    //Setters
-    public void setEstudiante(Estudiante estudiante) {
+    public UVRate(Estudiante estudiante) {
         this.estudiante = estudiante;
     }
 
-    public void setCusro(Curso curso) {
-        this.curso = curso;
+    // ----------- CATEDRÁTICOS -----------
+    public ArrayList<Catedratico> obtenerTodosCatedraticos() {
+        ArrayList<Catedratico> lista = new ArrayList<>();
+
+        try (Connection conn = ConexionUVRate.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM catedratico")) {
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nombre = rs.getString("nombre");
+
+                // Obtener curso único asignado
+                Curso curso = obtenerCursoDeCatedratico(rs.getInt("curso_id"));
+                ArrayList<Curso> cursos = new ArrayList<>();
+                if (curso != null) cursos.add(curso);
+
+                int upvoteCount = contarUpvotes(id);
+
+                // Crear objeto Catedratico
+                Upvotes upvotes = new Upvotes(upvoteCount);
+                Catedratico c = new Catedratico(id, nombre, upvotes, cursos);
+                lista.add(c);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
     }
 
-    public void setCatedrcatico(Catedratico catedratico) {
-        this.catedratico = catedratico;
+    // ----------- CURSOS -----------
+    public ArrayList<Curso> obtenerTodosCursos() {
+        ArrayList<Curso> lista = new ArrayList<>();
+
+        try (Connection conn = ConexionUVRate.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM curso")) {
+
+            while (rs.next()) {
+                Curso c = new Curso(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getString("descripcion")
+                );
+                lista.add(c);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
     }
 
-    public void setOrientador(Orientador orientador) {
-        this.orientador = orientador;
+    public Curso obtenerCursoDeCatedratico(int cursoId) {
+        if (cursoId == 0) return null;
+
+        try (Connection conn = ConexionUVRate.getConnection();
+             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM curso WHERE id = ?")) {
+            stmt.setInt(1, cursoId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new Curso(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getString("descripcion")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-// Contar Upvotes de un catedrático
-public int contarUpvotes(Catedratico c) {
-    return (int) upvotesCatedraticos.stream()
-        .filter(u -> u.getCatedratico().equals(c))
-        .count();
+    // ----------- UPVOTES -----------
+    public boolean yaVoto(int estudianteId, int catedraticoId) {
+        try (Connection conn = ConexionUVRate.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(
+                     "SELECT COUNT(*) FROM upvote WHERE usuario_id = ? AND catedratico_id = ?")) {
+            stmt.setInt(1, estudianteId);
+            stmt.setInt(2, catedraticoId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) return rs.getInt(1) > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void toggleUpvote(int estudianteId, int catedraticoId) {
+        if (yaVoto(estudianteId, catedraticoId)) {
+            try (Connection conn = ConexionUVRate.getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(
+                         "DELETE FROM upvote WHERE usuario_id = ? AND catedratico_id = ?")) {
+                stmt.setInt(1, estudianteId);
+                stmt.setInt(2, catedraticoId);
+                stmt.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            try (Connection conn = ConexionUVRate.getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(
+                         "INSERT INTO upvote (usuario_id, catedratico_id) VALUES (?, ?)")) {
+                stmt.setInt(1, estudianteId);
+                stmt.setInt(2, catedraticoId);
+                stmt.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public int contarUpvotes(int catedraticoId) {
+        try (Connection conn = ConexionUVRate.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(
+                     "SELECT COUNT(*) FROM upvote WHERE catedratico_id = ?")) {
+            stmt.setInt(1, catedraticoId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) return rs.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public ArrayList<Catedratico> obtenerCatedraticosPorCurso(int cursoId) {
+    ArrayList<Catedratico> lista = new ArrayList<>();
+
+    try (Connection conn = ConexionUVRate.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(
+                 "SELECT c.id, c.nombre, c.curso_id " +
+                 "FROM catedratico c " +
+                 "WHERE c.curso_id = ?")) {
+        stmt.setInt(1, cursoId);
+        ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String nombre = rs.getString("nombre");
+
+            // Obtener curso del catedrático
+            Curso curso = obtenerCursoDeCatedratico(rs.getInt("curso_id"));
+            ArrayList<Curso> cursos = new ArrayList<>();
+            if (curso != null) cursos.add(curso);
+
+            int upvotes = contarUpvotes(id);
+            Upvotes upvoteObj = new Upvotes(null, null, null); // dummy, solo para tener objeto Upvotes
+            upvoteObj.setUpvotes(null, null, null); // temporal si necesitas inicializar
+            Catedratico cat = new Catedratico(id, nombre, upvoteObj, cursos);
+            lista.add(cat);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return lista;
 }
-
-// Verificar si un estudiante ya votó
-public boolean yaVoto(Estudiante e, Catedratico c) {
-    return upvotesCatedraticos.stream()
-        .anyMatch(u -> u.getCatedratico().equals(c) && u.getEstudiante().equals(e));
-}
-
-// Toggle Upvote
-public boolean toggleUpvote(Estudiante e, Catedratico c) {
-    if (yaVoto(e, c)) {
-        upvotesCatedraticos.removeIf(u -> u.getCatedratico().equals(c) && u.getEstudiante().equals(e));
-        return false; // ahora ya no tiene like
-    } else {
-        upvotesCatedraticos.add(new Upvotes(c, e, null)); // null para curso
-        return true; // ahora tiene like
-    }
-}
-// GETTERS para VistaUVRate
-    public List<Catedratico> obtenerTodosCatedraticos() { return catedraticos; }
-    public List<Curso> obtenerTodosCursos() { return cursos; }
-
-
 
 }

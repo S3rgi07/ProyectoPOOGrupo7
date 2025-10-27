@@ -1,6 +1,7 @@
 public class Estudiante {
 
     // atributos
+    private int id;
     private String nombre;
     private int carnet;
     private String correo;
@@ -20,6 +21,15 @@ public class Estudiante {
     }
 
     // get y setters
+
+     public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getNombre() {
         return nombre;
     }

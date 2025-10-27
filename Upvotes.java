@@ -1,43 +1,98 @@
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * Upvotes
+ *
+ * - Soporta dos modos de uso:
+ *   1) Representar un conteo total de upvotes (new Upvotes(int count))
+ *   2) Representar un upvote individual (new Upvotes(Catedratico, Estudiante, Curso))
+ *
+ * - Provee getUpvotes() (para compatibilidad con el resto del código),
+ *   y métodos increment/ decrement para actualizar el conteo en memoria.
+ *
+ * Nota: No es una colección. No uses contains/add sobre esta clase.
+ */
 public class Upvotes {
+    // conteo total (puede venir de BD)
+    private int upvoteCount;
+
+    // información de un voto individual (opcional)
     private Catedratico catedratico;
     private Estudiante estudiante;
     private Curso curso;
     private LocalDate fecha;
-    
+
+    // ---------------- Constructores ----------------
+
+    /** Constructor para representar un conteo (p. ej. desde BD) */
+    public Upvotes(int count) {
+        this.upvoteCount = Math.max(0, count);
+        this.catedratico = null;
+        this.estudiante = null;
+        this.curso = null;
+        this.fecha = null;
+    }
+
+    /** Constructor para representar un voto individual */
     public Upvotes(Catedratico catedratico, Estudiante estudiante, Curso curso) {
+        if (catedratico == null || estudiante == null || curso == null) {
+            // permitimos crear con nulls si aún no tienes todos los objetos,
+            // pero es preferible pasar objetos válidos
+            // no lanzamos excepción para compatibilidad con código previo.
+        }
         this.catedratico = catedratico;
         this.estudiante = estudiante;
         this.curso = curso;
-        this.fecha = LocalDate.now(); //asigna la fecha automáticamente
+        this.fecha = LocalDate.now();
+        // cuando se crea un voto individual, por defecto se considera 1
+        this.upvoteCount = 1;
     }
-    
-    //Getters 
+
+    // ---------------- Getters ----------------
+
+    /** Devuelve el conteo de upvotes (compatible con llamadas existentes getUpvotes()) */
+    public int getUpvotes() {
+        return upvoteCount;
+    }
+
+    public void setUpvotes(Catedratico catedratico, Estudiante estudiante, Curso curso) {
+        this.catedratico = catedratico;
+        this.estudiante = estudiante;
+        this.curso = curso;
+        this.fecha = LocalDate.now();
+    }
+
     public Catedratico getCatedratico() {
-        return this.catedratico;
+        return catedratico;
     }
 
     public Estudiante getEstudiante() {
-        return this.estudiante;
+        return estudiante;
     }
 
     public Curso getCurso() {
-        return this.curso;
+        return curso;
     }
 
     public LocalDate getFecha() {
-        return this.fecha;
+        return fecha;
     }
 
-    public Upvotes getUpvotes() {
-       return this; //método temporal, la versión final va conectada a la base de datos
+    // ---------------- Setters / utilitarios ----------------
+
+    public void setUpvoteCount(int count) {
+        this.upvoteCount = Math.max(0, count);
     }
 
-    //Setters
-    public void setCatedrcatico(Catedratico catedratico) {
+    public void increment() {
+        this.upvoteCount++;
+    }
+
+    public void decrement() {
+        if (this.upvoteCount > 0) this.upvoteCount--;
+    }
+
+    public void setCatedratico(Catedratico catedratico) {
         this.catedratico = catedratico;
     }
 
@@ -53,14 +108,13 @@ public class Upvotes {
         this.fecha = fecha;
     }
 
-    // "setUpvotes" permite modificar los datos del voto completo
-    public void setUpvotes(Catedratico catedratico, Estudiante estudiante, LocalDate fecha, Curso curso) {
-        if (catedratico == null || estudiante == null || curso == null || fecha == null) {
-            throw new IllegalArgumentException("Ningún campo de Upvotes puede ser nulo.");
+    /** Representación útil para debugging */
+    @Override
+    public String toString() {
+        if (catedratico != null && estudiante != null && curso != null) {
+            return "Upvote[voto individual: " + estudiante.getCorreo() + " -> " +
+                    catedratico.getNombre() + "(" + curso.getNombre() + ") at " + fecha + "]";
         }
-        this.catedratico = catedratico;
-        this.estudiante = estudiante;
-        this.fecha = LocalDate.now();
-        this.curso = curso;
+        return "Upvotes[total=" + upvoteCount + "]";
     }
 }

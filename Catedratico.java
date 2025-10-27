@@ -1,27 +1,20 @@
+import java.util.ArrayList;
+
 public class Catedratico {
+    private int id;
     private String nombre;
-    private String descripcion;
-    private Upvotes upvotesCatedratico;
+    private Upvotes upvotes;
+    private ArrayList<Curso> cursos;
 
-    public Catedratico(String nombre, String descripcion, Upvotes upvotesCatedratico){ //Constructor
+    public Catedratico(int id, String nombre, Upvotes upvotes, ArrayList<Curso> cursos) {
+        this.id = id;
         this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.upvotesCatedratico = upvotesCatedratico;
+        this.upvotes = upvotes;
+        this.cursos = cursos;
     }
 
-    public String getNombre(){ //Métodos
-        return nombre;
-    }
-
-    public String getDescripcion(){
-        return descripcion;
-    }
-
-    public Upvotes getUpvotesCat() {
-        return upvotesCatedratico;
-    }
-
-    public void setUpvotesCat(Upvotes upvotesCatedratico) {
-    this.upvotesCatedratico = upvotesCatedratico;
-    }
+    public int getId() { return id; }
+    public String getNombre() { return nombre; }
+    public Upvotes getUpvotes() { return upvotes; }
+    public ArrayList<Curso> getCursos() { return cursos; }
 }

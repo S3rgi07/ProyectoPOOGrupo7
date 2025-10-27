@@ -6,16 +6,16 @@ public class Curso {
     private String tipo;
     private Upvotes upvotesCurso;
 
-    public Curso(int codigo, String nombre, String descripcion, String competencias, String tipo, Upvotes upvotesCurso){
-        this.codigo = codigo;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.competencias = competencias;
-        this.tipo = tipo;
-        this.upvotesCurso = upvotesCurso;
-
-        
-    }
+    // Añade este constructor a Curso.java
+public Curso(int codigo, String nombre, String descripcion) {
+    this.codigo = codigo;
+    this.nombre = nombre;
+    this.descripcion = descripcion;
+    // Inicializa los demás campos a valores por defecto
+    this.competencias = ""; 
+    this.tipo = "";
+    this.upvotesCurso = null; // O new Upvotes(0) si también aplica
+}
 
     public int getCodigo(){
         return codigo;
@@ -45,9 +45,9 @@ public class Curso {
         return nombre;
     }
 
-    public void setNombre(){
-        this.nombre = nombre;
-    }
+    public void setNombre(String nombre){
+         this.nombre = nombre; 
+        }
 
     public void setCompetencias(String competencias){
         this.competencias = competencias;
@@ -56,4 +56,26 @@ public class Curso {
     public String getCompetencias(){
         return competencias;
     }
+
+    public String getDescripcion() {
+    return descripcion;
+}
+
+public void setDescripcion(String descripcion) {
+    this.descripcion = descripcion;
+}
+
+@Override
+public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null || getClass() != obj.getClass()) return false;
+    Curso curso = (Curso) obj;
+    return codigo == curso.codigo; // Compara cursos por su 'codigo'
+}
+
+@Override
+public int hashCode() {
+    return java.util.Objects.hash(codigo); // Genera un hash a partir del 'codigo'
+}
+
 }
