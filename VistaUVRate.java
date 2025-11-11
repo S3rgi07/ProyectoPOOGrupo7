@@ -13,6 +13,7 @@ public class VistaUVRate extends JFrame {
     private JScrollPane scrollPanel;
     private JTextField searchField;
     private JButton btnCatedraticos, btnCursos;
+    private JButton btnOrientador;
 
     public VistaUVRate(UVRate controlador, Estudiante estudiante) {
         super("UVRate Dashboard");
@@ -32,6 +33,7 @@ public class VistaUVRate extends JFrame {
 
         btnCatedraticos = new JButton("Catedráticos");
         btnCursos = new JButton("Cursos");
+        btnOrientador = new JButton("Orientador");
 
         btnCatedraticos.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnCursos.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -40,6 +42,9 @@ public class VistaUVRate extends JFrame {
         panelLateral.add(btnCatedraticos);
         panelLateral.add(Box.createRigidArea(new Dimension(0, 10)));
         panelLateral.add(btnCursos);
+        panelLateral.add(Box.createRigidArea(new Dimension(0, 10)));
+        panelLateral.add(btnOrientador);
+
 
         add(panelLateral, BorderLayout.WEST);
 
