@@ -162,20 +162,41 @@ public class UVRate {
     // ===================== MAPPER =====================
 
     private Catedratico mapearCatedratico(ResultSet rs) throws SQLException {
-
         int idCat = rs.getInt("id");
         String nombreCat = rs.getString("nombre");
-        int cursoId = rs.getInt("curso_id");
 
-        Curso curso = obtenerCurso(cursoId);
-        ArrayList<Curso> cursos = new ArrayList<>();
-        if (curso != null)
-            cursos.add(curso);
+        // Obtener todos los cursos de este catedrático desde la tabla intermedia
+        ArrayList<Curso> cursos = obtenerCursosPorCatedratico(idCat);
 
         int upvoteCount = contarUpvotes(idCat);
         Upvotes upvotes = new Upvotes(upvoteCount);
 
         return new Catedratico(idCat, nombreCat, upvotes, cursos);
+    }
+
+    public ArrayList<Curso> obtenerCursosPorCatedratico(int idCatedratico) {
+        ArrayList<Curso> cursos = new ArrayList<>();
+
+        try (Connection conn = ConexionUVRate.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(
+                        "SELECT c.* FROM curso c " +
+                                "JOIN catedratico_curso cc ON c.id = cc.curso_id " +
+                                "WHERE cc.catedratico_id = ?")) {
+            stmt.setInt(1, idCatedratico);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                cursos.add(new Curso(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getString("descripcion")));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cursos;
     }
 
     public ArrayList<Curso> sugerirCursosPorMeta(String metaNombre) {

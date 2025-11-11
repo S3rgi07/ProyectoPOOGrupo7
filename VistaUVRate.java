@@ -45,7 +45,6 @@ public class VistaUVRate extends JFrame {
         panelLateral.add(Box.createRigidArea(new Dimension(0, 10)));
         panelLateral.add(btnOrientador);
 
-
         add(panelLateral, BorderLayout.WEST);
 
         // Panel principal con scroll
@@ -182,6 +181,12 @@ public class VistaUVRate extends JFrame {
         panel.add(upvoteBtn);
         perfil.add(panel);
         perfil.setVisible(true);
+
+        for (Curso c : cat.getCursos()) {
+            JLabel curso = new JLabel("- " + c.getNombre());
+            panel.add(curso);
+        }
+
     }
 
     // -------------------- Cursos --------------------
@@ -279,14 +284,14 @@ public class VistaUVRate extends JFrame {
         panelPrincipal.add(titulo);
         panelPrincipal.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        JComboBox<String> comboMetas = new JComboBox<>(new String[]{
-            "Seleccionar una meta...",
-            "Desarrollador de IA",
-            "Desarrollador Full-Stack",
-            "Analista de Datos",
-            "Diseñador UX/UI"
+        JComboBox<String> comboMetas = new JComboBox<>(new String[] {
+                "Seleccionar una meta...",
+                "Desarrollador de IA",
+                "Desarrollador Full-Stack",
+                "Analista de Datos",
+                "Diseñador UX/UI"
         });
-        
+
         comboMetas.setMaximumSize(new Dimension(400, 30));
         panelPrincipal.add(comboMetas);
         panelPrincipal.add(Box.createRigidArea(new Dimension(0, 20)));
@@ -311,8 +316,8 @@ public class VistaUVRate extends JFrame {
                         panelCursos.add(lbl);
                     }
                 }
-            panelCursos.revalidate();
-            panelCursos.repaint();
+                panelCursos.revalidate();
+                panelCursos.repaint();
             }
         });
 
