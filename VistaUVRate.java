@@ -74,6 +74,7 @@ public class VistaUVRate extends JFrame {
         // Listeners
         btnCatedraticos.addActionListener(e -> mostrarCatedraticos());
         btnCursos.addActionListener(e -> mostrarCursos());
+        btnOrientador.addActionListener(e -> mostrarOrientador());
         searchField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
