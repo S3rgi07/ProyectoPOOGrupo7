@@ -182,8 +182,8 @@ public class UVRate{
 
         return new Catedratico(idCat, nombreCat, upvotes, cursos);
     }
-    public List<Curso> sugerirCursosPorMeta(String metaNombre) {
-    List<Curso> sugeridos = new ArrayList<>();
+    public ArrayList<Curso> sugerirCursosPorMeta(String metaNombre) {
+    ArrayList<Curso> sugeridos = new ArrayList<>();
    try (Connection conn = ConexionUVRate.getConnection();
     PreparedStatement stmt = conn.prepareStatement("SELECT c.* FROM curso c " +
         "JOIN curso_meta cm ON [c.id](http://c.id/) = cm.curso_id " +
