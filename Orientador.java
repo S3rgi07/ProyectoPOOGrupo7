@@ -62,4 +62,5 @@ public List<Curso> sugerirCursos(String metaNombre) {
     public void setCursos(List<Curso> cursos) {
     this.cursos = cursos;
     }
+    // :)
 }
