@@ -263,4 +263,12 @@ public class VistaUVRate extends JFrame {
         perfil.add(panel);
         perfil.setVisible(true);
     }
+
+    // -------------------- Orientador --------------------
+    private void mostrarOrientador() {
+        btnOrientador.setBackground(Color.LIGHT_GRAY);
+        btnCatedraticos.setBackground(null);
+        btnCursos.setBackground(null);
+    }
+
 }
