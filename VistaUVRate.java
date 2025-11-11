@@ -267,6 +267,10 @@ public class VistaUVRate extends JFrame {
 
         perfil.add(panel);
         perfil.setVisible(true);
+
+        cats = controlador.obtenerCatedraticosPorCurso(curso.getCodigo());
+        cats.sort(Comparator.comparingInt(c -> -c.getUpvotes().getUpvotes()));
+
     }
 
     // -------------------- Orientador --------------------

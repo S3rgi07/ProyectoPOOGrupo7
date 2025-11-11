@@ -32,18 +32,36 @@ public class UVRate {
     public ArrayList<Catedratico> obtenerCatedraticosPorCurso(int idCurso) {
         ArrayList<Catedratico> lista = new ArrayList<>();
 
+        String sql = """
+                    SELECT catedratico.*,
+                           COUNT(upvote.id) AS total_upvotes
+                    FROM catedratico
+                    JOIN catedratico_curso ON catedratico.id = catedratico_curso.catedratico_id
+                    LEFT JOIN upvote ON upvote.catedratico_id = catedratico.id
+                    WHERE catedratico_curso.curso_id = ?
+                    GROUP BY catedratico.id
+                    ORDER BY total_upvotes DESC;
+                """;
+
         try (Connection conn = ConexionUVRate.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(
-                        "SELECT * FROM catedratico WHERE curso_id = ? ORDER BY (SELECT COUNT(*) FROM upvote WHERE upvote.catedratico_id = catedratico.id) DESC")) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, idCurso);
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                lista.add(mapearCatedratico(rs));
+                int idCat = rs.getInt("id");
+                String nombre = rs.getString("nombre");
+                int totalUpvotes = rs.getInt("total_upvotes");
+
+                Upvotes upvotes = new Upvotes(totalUpvotes);
+                ArrayList<Curso> cursos = new ArrayList<>();
+                cursos.add(obtenerCurso(idCurso));
+
+                lista.add(new Catedratico(idCat, nombre, upvotes, cursos));
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
