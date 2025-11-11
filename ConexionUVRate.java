@@ -28,4 +28,17 @@ public class ConexionUVRate {
     return conn;
     }
 
+    public static void probarConexion() {
+    try (Connection conn = getConnection()) {
+        if (conn != null) {
+            System.out.println("[TEST] La conexión con la base de datos funciona correctamente.");
+        } else {
+            System.out.println("[TEST] No se pudo establecer conexión con la base de datos.");
+        }
+    } catch (SQLException e) {
+        System.err.println("[TEST ERROR] Error al cerrar la conexión de prueba.");
+        e.printStackTrace();
+        }
+    }
+
 }
