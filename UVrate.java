@@ -184,4 +184,6 @@ public class UVRate{
     }
     public List<Curso> sugerirCursosPorMeta(String metaNombre) {
     List<Curso> sugeridos = new ArrayList<>();
+   try (Connection conn = ConexionUVRate.getConnection();
+    PreparedStatement stmt = conn.prepareStatement(
 }
