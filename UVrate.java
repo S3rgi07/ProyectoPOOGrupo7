@@ -185,5 +185,12 @@ public class UVRate{
     public List<Curso> sugerirCursosPorMeta(String metaNombre) {
     List<Curso> sugeridos = new ArrayList<>();
    try (Connection conn = ConexionUVRate.getConnection();
-    PreparedStatement stmt = conn.prepareStatement(
+    PreparedStatement stmt = conn.prepareStatement("SELECT c.* FROM curso c " +
+"JOIN curso_meta cm ON [c.id](http://c.id/) = cm.curso_id " +
+"JOIN meta m ON cm.meta_id = [m.id](http://m.id/) " +
+"WHERE LOWER(m.nombre) = LOWER(?)"
+)) {
+stmt.setString(1, metaNombre);
+ResultSet rs = stmt.executeQuery();
+
 }
