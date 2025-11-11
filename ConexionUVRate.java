@@ -41,4 +41,17 @@ public class ConexionUVRate {
         }
     }
 
+    public static void hacerBackup() {
+    try {
+        java.nio.file.Path origen = java.nio.file.Paths.get("database/uvrate_db.sqlite");
+        java.nio.file.Path destino = java.nio.file.Paths.get("database/uvrate_db_backup.sqlite");
+
+        java.nio.file.Files.copy(origen, destino, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+        System.out.println("[BACKUP] Copia de seguridad creada correctamente.");
+    } catch (Exception e) {
+        System.err.println("[BACKUP ERROR] No se pudo crear el respaldo de la base de datos.");
+        e.printStackTrace();
+        }
+    }
+
 }
