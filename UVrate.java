@@ -186,11 +186,25 @@ public class UVRate{
     List<Curso> sugeridos = new ArrayList<>();
    try (Connection conn = ConexionUVRate.getConnection();
     PreparedStatement stmt = conn.prepareStatement("SELECT c.* FROM curso c " +
-"JOIN curso_meta cm ON [c.id](http://c.id/) = cm.curso_id " +
-"JOIN meta m ON cm.meta_id = [m.id](http://m.id/) " +
-"WHERE LOWER(m.nombre) = LOWER(?)"
-)) {
-stmt.setString(1, metaNombre);
-ResultSet rs = stmt.executeQuery();
+        "JOIN curso_meta cm ON [c.id](http://c.id/) = cm.curso_id " +
+        "JOIN meta m ON cm.meta_id = [m.id](http://m.id/) " +
+        "WHERE LOWER(m.nombre) = LOWER(?)"
+        )) {
+        stmt.setString(1, metaNombre);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+                sugeridos.add(new Curso(
+                    rs.getInt("id"),
+                    rs.getString("nombre"),
+                    rs.getString("descripcion")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sugeridos;
 
+
+
+}
 }
