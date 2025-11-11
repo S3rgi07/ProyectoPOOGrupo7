@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 import java.sql.*;
 
-public class Login implements ActionListener {
+public class Login extends JFrame implements ActionListener {
 
     JFrame frame = new JFrame("Login UVRate");
     JButton loginButton = new JButton("Login");
@@ -27,7 +27,8 @@ public class Login implements ActionListener {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2d = (Graphics2D) g;
                 // Cambié el celeste por un verde claro
-                GradientPaint gp = new GradientPaint(0, 0, new Color(144, 238, 144), 0, getHeight(), new Color(0, 184, 148));
+                GradientPaint gp = new GradientPaint(0, 0, new Color(144, 238, 144), 0, getHeight(),
+                        new Color(0, 184, 148));
                 g2d.setPaint(gp);
                 g2d.fillRect(0, 0, getWidth(), getHeight());
             }
@@ -79,6 +80,18 @@ public class Login implements ActionListener {
         styleButton(registroButton, new Color(9, 132, 227));
         mainPanel.add(registroButton);
 
+        JButton btnCerrar = new JButton("X");
+        btnCerrar.setFocusPainted(false);
+        btnCerrar.setBorderPainted(false);
+        btnCerrar.setBackground(new Color(255, 100, 100));
+        btnCerrar.setBounds(380, 10, 45, 25);
+
+        // ==== Acciones ====
+        btnCerrar.addActionListener(e -> System.exit(0));
+
+        // Agregarlos al frame o panel principal
+        frame.add(btnCerrar);
+
         // Acciones
         loginButton.addActionListener(this);
         resetButton.addActionListener(this);
@@ -100,11 +113,15 @@ public class Login implements ActionListener {
     // Borde redondeado para campos y botones
     class RoundedBorder extends AbstractBorder {
         private int radius;
-        RoundedBorder(int r) { radius = r; }
+
+        RoundedBorder(int r) {
+            radius = r;
+        }
+
         @Override
         public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
             g.setColor(Color.WHITE);
-            g.drawRoundRect(x, y, width-1, height-1, radius, radius);
+            g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
         }
     }
 
@@ -132,7 +149,7 @@ public class Login implements ActionListener {
                 stmt.setString(2, pass);
 
                 ResultSet rs = stmt.executeQuery();
-                if(rs.next()) {
+                if (rs.next()) {
                     messageLabel.setText("Inicio exitoso!");
                     messageLabel.setForeground(Color.GREEN);
 
@@ -140,11 +157,13 @@ public class Login implements ActionListener {
                     String nombre = rs.getString("nombre");
                     // Para carnet, si no existe en BD, usar 0
                     int carnet = 0;
-                    try { carnet = rs.getInt("carnet"); } catch(Exception ex) {}
+                    try {
+                        carnet = rs.getInt("carnet");
+                    } catch (Exception ex) {
+                    }
                     Estudiante estudiante = new Estudiante(nombre, carnet, correo);
 
                     estudiante.setId(rs.getInt("id"));
-
 
                     // Creamos el controlador con el estudiante
                     UVRate controlador = new UVRate(estudiante);

@@ -4,9 +4,9 @@ import javax.swing.*;
 import javax.swing.border.*;
 import java.sql.*;
 
-public class Registro implements ActionListener {
+public class Registro extends JFrame implements ActionListener {
 
-    JFrame frame = new JFrame("Registro UVRate");
+    // Campos de formulario
     JTextField usuarioID = new JTextField();
     JTextField correoTxt = new JTextField();
     JPasswordField password1 = new JPasswordField();
@@ -15,17 +15,61 @@ public class Registro implements ActionListener {
     JLabel messageLabel = new JLabel();
 
     public Registro() {
-        frame.setSize(500, 400);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
-        frame.setUndecorated(true);
-        frame.setLayout(new BorderLayout());
+        // ===== CONFIGURACIÓN BÁSICA DEL FRAME =====
+        setTitle("Registro UVRate");
+        setSize(500, 400);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setUndecorated(true);
+        setLayout(new BorderLayout());
 
+        // ===== BARRA SUPERIOR =====
+        JPanel barraSuperior = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 5));
+        barraSuperior.setBackground(new Color(240, 240, 240, 0));
+
+        // Botón Volver
+        JButton btnVolver = new JButton("← Volver al inicio");
+        btnVolver.setFocusPainted(false);
+        btnVolver.setBackground(new Color(200, 200, 255));
+        btnVolver.setBorder(BorderFactory.createLineBorder(Color.BLUE, 1));
+        btnVolver.addActionListener(e -> {
+            dispose();
+            new Login();
+        });
+
+        // Botón Minimizar
+        JButton btnMinimizar = new JButton("—");
+        btnMinimizar.setFocusPainted(false);
+        btnMinimizar.setBorderPainted(false);
+        btnMinimizar.setBackground(new Color(180, 180, 180));
+        btnMinimizar.setForeground(Color.WHITE);
+        btnMinimizar.setPreferredSize(new Dimension(45, 25));
+        btnMinimizar.addActionListener(e -> setState(JFrame.ICONIFIED));
+
+        // Botón Cerrar
+        JButton btnCerrar = new JButton("✕");
+        btnCerrar.setFocusPainted(false);
+        btnCerrar.setBorderPainted(false);
+        btnCerrar.setBackground(Color.RED);
+        btnCerrar.setForeground(Color.WHITE);
+        btnCerrar.setPreferredSize(new Dimension(45, 25));
+        btnCerrar.addActionListener(e -> System.exit(0));
+
+        // Añadimos en orden
+        barraSuperior.add(btnVolver);
+        barraSuperior.add(btnMinimizar);
+        barraSuperior.add(btnCerrar);
+
+        add(barraSuperior, BorderLayout.NORTH);
+
+        // ===== PANEL PRINCIPAL =====
         JPanel panel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
                 Graphics2D g2d = (Graphics2D) g;
-                GradientPaint gp = new GradientPaint(0, 0, new Color(255, 234, 167), 0, getHeight(), new Color(255, 118, 117));
+                GradientPaint gp = new GradientPaint(0, 0, new Color(255, 234, 167),
+                        0, getHeight(), new Color(255, 118, 117));
                 g2d.setPaint(gp);
                 g2d.fillRect(0, 0, getWidth(), getHeight());
             }
@@ -38,7 +82,6 @@ public class Registro implements ActionListener {
         title.setBounds(150, 20, 300, 40);
         panel.add(title);
 
-        panel.add(new JLabel("Usuario:")).setForeground(Color.WHITE);
         JLabel userLabel = new JLabel("Usuario:");
         userLabel.setForeground(Color.WHITE);
         userLabel.setBounds(50, 80, 100, 25);
@@ -80,10 +123,12 @@ public class Registro implements ActionListener {
         registrarButton.addActionListener(this);
         panel.add(registrarButton);
 
-        frame.add(panel, BorderLayout.CENTER);
-        frame.setVisible(true);
+        add(panel, BorderLayout.CENTER);
+
+        setVisible(true);
     }
 
+    // ====== ESTILO DE BOTONES ======
     private void styleButton(JButton btn, Color bg) {
         btn.setFocusPainted(false);
         btn.setBackground(bg);
@@ -92,16 +137,22 @@ public class Registro implements ActionListener {
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
+    // ====== BORDE REDONDEADO ======
     class RoundedBorder extends AbstractBorder {
         private int radius;
-        RoundedBorder(int r) { radius = r; }
+
+        RoundedBorder(int r) {
+            radius = r;
+        }
+
         @Override
         public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
             g.setColor(Color.WHITE);
-            g.drawRoundRect(x, y, width-1, height-1, radius, radius);
+            g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
         }
     }
 
+    // ====== ACCIÓN DE REGISTRO ======
     @Override
     public void actionPerformed(ActionEvent e) {
         String user = usuarioID.getText();
@@ -122,28 +173,29 @@ public class Registro implements ActionListener {
         }
 
         try (Connection conn = ConexionUVRate.getConnection()) {
-    String sql = "INSERT INTO usuario (nombre, correo, contraseña) VALUES (?, ?, ?)";
-    PreparedStatement stmt = conn.prepareStatement(sql);
-    stmt.setString(1, user);
-    stmt.setString(2, correo);
-    stmt.setString(3, pass1Str);
-    stmt.executeUpdate();
+            String sql = "INSERT INTO usuario (nombre, correo, contraseña) VALUES (?, ?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, user);
+            stmt.setString(2, correo);
+            stmt.setString(3, pass1Str);
+            stmt.executeUpdate();
 
-    messageLabel.setText("¡Registro exitoso!");
-    messageLabel.setForeground(Color.GREEN);
+            messageLabel.setText("¡Registro exitoso!");
+            messageLabel.setForeground(Color.GREEN);
 
-    // Esperar un momento y volver al login
-    SwingUtilities.invokeLater(() -> {
-        frame.dispose(); // cerrar ventana de registro
-        new Login(); // abrir ventana de login
-    });
+            // volver al login después de 1 seg
+            Timer timer = new Timer(1000, evt -> {
+                dispose();
+                new Login();
+            });
+            timer.setRepeats(false);
+            timer.start();
 
-} catch (SQLException ex) {
-    messageLabel.setText("Error: correo ya registrado");
-    messageLabel.setForeground(Color.RED);
-    ex.printStackTrace();
-}
-
+        } catch (SQLException ex) {
+            messageLabel.setText("Error: correo ya registrado");
+            messageLabel.setForeground(Color.RED);
+            ex.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {

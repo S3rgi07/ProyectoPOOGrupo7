@@ -1,7 +1,7 @@
 import java.sql.*;
 import java.util.ArrayList;
 
-public class UVRate{
+public class UVRate {
 
     private Estudiante estudiante;
 
@@ -15,8 +15,8 @@ public class UVRate{
         ArrayList<Catedratico> lista = new ArrayList<>();
 
         try (Connection conn = ConexionUVRate.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM catedratico")) {
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT * FROM catedratico")) {
 
             while (rs.next()) {
                 lista.add(mapearCatedratico(rs));
@@ -33,9 +33,8 @@ public class UVRate{
         ArrayList<Catedratico> lista = new ArrayList<>();
 
         try (Connection conn = ConexionUVRate.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(
-                     "SELECT * FROM catedratico WHERE curso_id = ? ORDER BY (SELECT COUNT(*) FROM upvote WHERE upvote.catedratico_id = catedratico.id) DESC"
-             )) {
+                PreparedStatement stmt = conn.prepareStatement(
+                        "SELECT * FROM catedratico WHERE curso_id = ? ORDER BY (SELECT COUNT(*) FROM upvote WHERE upvote.catedratico_id = catedratico.id) DESC")) {
 
             stmt.setInt(1, idCurso);
             ResultSet rs = stmt.executeQuery();
@@ -57,15 +56,14 @@ public class UVRate{
         ArrayList<Curso> lista = new ArrayList<>();
 
         try (Connection conn = ConexionUVRate.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM curso")) {
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT * FROM curso")) {
 
             while (rs.next()) {
                 lista.add(new Curso(
                         rs.getInt("id"),
                         rs.getString("nombre"),
-                        rs.getString("descripcion")
-                ));
+                        rs.getString("descripcion")));
             }
 
         } catch (SQLException e) {
@@ -77,7 +75,7 @@ public class UVRate{
 
     public Curso obtenerCurso(int idCurso) {
         try (Connection conn = ConexionUVRate.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM curso WHERE id = ?")) {
+                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM curso WHERE id = ?")) {
 
             stmt.setInt(1, idCurso);
             ResultSet rs = stmt.executeQuery();
@@ -86,8 +84,7 @@ public class UVRate{
                 return new Curso(
                         rs.getInt("id"),
                         rs.getString("nombre"),
-                        rs.getString("descripcion")
-                );
+                        rs.getString("descripcion"));
             }
 
         } catch (Exception e) {
@@ -100,27 +97,26 @@ public class UVRate{
     // ===================== UPVOTES =====================
 
     public boolean yaVoto(int estudianteId, int catedraticoId) {
-    try (Connection conn = ConexionUVRate.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(
-             "SELECT COUNT(*) FROM upvote WHERE usuario_id = ? AND catedratico_id = ?")) { // 👈 CORREGIDO
-        stmt.setInt(1, estudianteId);
-        stmt.setInt(2, catedraticoId);
-        ResultSet rs = stmt.executeQuery();
-        if (rs.next()) return rs.getInt(1) > 0;
-    } catch (Exception e) {
-        e.printStackTrace();
+        try (Connection conn = ConexionUVRate.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(
+                        "SELECT COUNT(*) FROM upvote WHERE usuario_id = ? AND catedratico_id = ?")) { // 👈 CORREGIDO
+            stmt.setInt(1, estudianteId);
+            stmt.setInt(2, catedraticoId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next())
+                return rs.getInt(1) > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
-    return false;
-}
-
 
     public void toggleUpvote(int estudianteId, int catedraticoId) {
         if (yaVoto(estudianteId, catedraticoId)) {
 
             try (Connection conn = ConexionUVRate.getConnection();
-                 PreparedStatement stmt = conn.prepareStatement(
-                         "DELETE FROM upvote WHERE usuario_id = ? AND catedratico_id = ?"
-                 )) {
+                    PreparedStatement stmt = conn.prepareStatement(
+                            "DELETE FROM upvote WHERE usuario_id = ? AND catedratico_id = ?")) {
 
                 stmt.setInt(1, estudianteId);
                 stmt.setInt(2, catedraticoId);
@@ -133,9 +129,8 @@ public class UVRate{
         } else {
 
             try (Connection conn = ConexionUVRate.getConnection();
-                 PreparedStatement stmt = conn.prepareStatement(
-                         "INSERT INTO upvote (usuario_id, catedratico_id) VALUES (?, ?)"
-                 )) {
+                    PreparedStatement stmt = conn.prepareStatement(
+                            "INSERT INTO upvote (usuario_id, catedratico_id) VALUES (?, ?)")) {
 
                 stmt.setInt(1, estudianteId);
                 stmt.setInt(2, catedraticoId);
@@ -149,13 +144,13 @@ public class UVRate{
 
     public int contarUpvotes(int idCatedratico) {
         try (Connection conn = ConexionUVRate.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(
-                     "SELECT COUNT(*) FROM upvote WHERE catedratico_id = ?"
-             )) {
+                PreparedStatement stmt = conn.prepareStatement(
+                        "SELECT COUNT(*) FROM upvote WHERE catedratico_id = ?")) {
 
             stmt.setInt(1, idCatedratico);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) return rs.getInt(1);
+            if (rs.next())
+                return rs.getInt(1);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -163,7 +158,6 @@ public class UVRate{
 
         return 0;
     }
-
 
     // ===================== MAPPER =====================
 
@@ -175,36 +169,40 @@ public class UVRate{
 
         Curso curso = obtenerCurso(cursoId);
         ArrayList<Curso> cursos = new ArrayList<>();
-        if (curso != null) cursos.add(curso);
+        if (curso != null)
+            cursos.add(curso);
 
         int upvoteCount = contarUpvotes(idCat);
         Upvotes upvotes = new Upvotes(upvoteCount);
 
         return new Catedratico(idCat, nombreCat, upvotes, cursos);
     }
+
     public ArrayList<Curso> sugerirCursosPorMeta(String metaNombre) {
-    ArrayList<Curso> sugeridos = new ArrayList<>();
-   try (Connection conn = ConexionUVRate.getConnection();
-    PreparedStatement stmt = conn.prepareStatement("SELECT c.* FROM curso c " +
-        "JOIN curso_meta cm ON [c.id](http://c.id/) = cm.curso_id " +
-        "JOIN meta m ON cm.meta_id = [m.id](http://m.id/) " +
-        "WHERE LOWER(m.nombre) = LOWER(?)"
-        )) {
-        stmt.setString(1, metaNombre);
-        ResultSet rs = stmt.executeQuery();
-        while (rs.next()) {
+        ArrayList<Curso> sugeridos = new ArrayList<>();
+
+        try (Connection conn = ConexionUVRate.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(
+                        "SELECT c.* FROM curso c " +
+                                "JOIN curso_meta cm ON c.id = cm.curso_id " +
+                                "JOIN meta m ON cm.meta_id = m.id " +
+                                "WHERE LOWER(m.nombre) = LOWER(?)")) {
+
+            stmt.setString(1, metaNombre);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
                 sugeridos.add(new Curso(
-                    rs.getInt("id"),
-                    rs.getString("nombre"),
-                    rs.getString("descripcion")
-                ));
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getString("descripcion")));
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return sugeridos;
+    }
 
-
-
-}
 }
