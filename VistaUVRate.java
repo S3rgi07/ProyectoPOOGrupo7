@@ -269,6 +269,54 @@ public class VistaUVRate extends JFrame {
         btnOrientador.setBackground(Color.LIGHT_GRAY);
         btnCatedraticos.setBackground(null);
         btnCursos.setBackground(null);
-    }
 
+        panelPrincipal.removeAll();
+        panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
+
+        JLabel titulo = new JLabel("🧭 Orientador Profesional");
+        titulo.setFont(new Font("Arial", Font.BOLD, 20));
+        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelPrincipal.add(titulo);
+        panelPrincipal.add(Box.createRigidArea(new Dimension(0, 20)));
+
+        JComboBox<String> comboMetas = new JComboBox<>(new String[]{
+            "Seleccionar una meta...",
+            "Desarrollador de IA",
+            "Desarrollador Full-Stack",
+            "Analista de Datos",
+            "Diseñador UX/UI"
+        });
+        
+        comboMetas.setMaximumSize(new Dimension(400, 30));
+        panelPrincipal.add(comboMetas);
+        panelPrincipal.add(Box.createRigidArea(new Dimension(0, 20)));
+
+        JPanel panelCursos = new JPanel();
+        panelCursos.setLayout(new BoxLayout(panelCursos, BoxLayout.Y_AXIS));
+        JScrollPane scroll = new JScrollPane(panelCursos);
+        scroll.setPreferredSize(new Dimension(600, 300));
+        panelPrincipal.add(scroll);
+
+        comboMetas.addActionListener(e -> {
+            panelCursos.removeAll();
+            String seleccion = (String) comboMetas.getSelectedItem();
+            if (!"Seleccionar una meta...".equals(seleccion)) {
+                ArrayList<Curso> sugeridos = new ArrayList<>(controlador.sugerirCursosPorMeta(seleccion));
+                if (sugeridos.isEmpty()) {
+                    panelCursos.add(new JLabel("No hay cursos sugeridos para esta meta."));
+                } else {
+                    for (Curso c : sugeridos) {
+                        JLabel lbl = new JLabel("• " + c.getNombre() + " – " + c.getDescripcion());
+                        lbl.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+                        panelCursos.add(lbl);
+                    }
+                }
+            panelCursos.revalidate();
+            panelCursos.repaint();
+            }
+        });
+
+        panelPrincipal.revalidate();
+        panelPrincipal.repaint();
+    }
 }
