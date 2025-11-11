@@ -100,22 +100,19 @@ public class UVRate{
     // ===================== UPVOTES =====================
 
     public boolean yaVoto(int estudianteId, int catedraticoId) {
-        try (Connection conn = ConexionUVRate.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(
-                     "SELECT COUNT(*) FROM upvote WHERE usuario_id = ? AND catedratico_id = ?")) {
-
-            stmt.setInt(1, estudianteId);
-            stmt.setInt(2, catedraticoId);
-
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) return rs.getInt(1) > 0;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return false;
+    try (Connection conn = ConexionUVRate.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(
+             "SELECT COUNT(*) FROM upvote WHERE usuario_id = ? AND catedratico_id = ?")) { // 👈 CORREGIDO
+        stmt.setInt(1, estudianteId);
+        stmt.setInt(2, catedraticoId);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) return rs.getInt(1) > 0;
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+    return false;
+}
+
 
     public void toggleUpvote(int estudianteId, int catedraticoId) {
         if (yaVoto(estudianteId, catedraticoId)) {

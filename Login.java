@@ -143,6 +143,9 @@ public class Login implements ActionListener {
                     try { carnet = rs.getInt("carnet"); } catch(Exception ex) {}
                     Estudiante estudiante = new Estudiante(nombre, carnet, correo);
 
+                    estudiante.setId(rs.getInt("id"));
+
+
                     // Creamos el controlador con el estudiante
                     UVRate controlador = new UVRate(estudiante);
 

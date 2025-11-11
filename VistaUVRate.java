@@ -155,7 +155,8 @@ public class VistaUVRate extends JFrame {
 
         panel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        JButton upvoteBtn = new JButton(controlador.yaVoto(estudiante.getId(), cat.getId()) ? "♥ Upvoted" : "♡ Dar Upvote");
+        JButton upvoteBtn = new JButton(
+                controlador.yaVoto(estudiante.getId(), cat.getId()) ? "♥ Upvoted" : "♡ Dar Upvote");
         upvoteBtn.setFont(new Font("Arial", Font.BOLD, 16));
         upvoteBtn.setForeground(Color.RED);
         upvoteBtn.setFocusPainted(false);
@@ -165,8 +166,10 @@ public class VistaUVRate extends JFrame {
 
         upvoteBtn.addActionListener(e -> {
             controlador.toggleUpvote(estudiante.getId(), cat.getId());
+            int nuevosUpvotes = controlador.contarUpvotes(cat.getId());
             boolean ya = controlador.yaVoto(estudiante.getId(), cat.getId());
             upvoteBtn.setText(ya ? "♥ Upvoted" : "♡ Dar Upvote");
+            JOptionPane.showMessageDialog(this, "Upvotes actualizados: " + nuevosUpvotes);
             mostrarCatedraticos();
         });
 
