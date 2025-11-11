@@ -182,4 +182,6 @@ public class UVRate{
 
         return new Catedratico(idCat, nombreCat, upvotes, cursos);
     }
+    public List<Curso> sugerirCursosPorMeta(String metaNombre) {
+    List<Curso> sugeridos = new ArrayList<>();
 }
