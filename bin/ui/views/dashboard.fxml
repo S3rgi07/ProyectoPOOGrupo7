@@ -1,36 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.geometry.Insets?>
 
 <BorderPane fx:id="root"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.DashboardController"
-            prefWidth="1100" prefHeight="650">
+            fx:controller="ui.controllers.DashboardController"
+            styleClass="dashboard-root">
 
-    <!-- ========== LATERAL ========== -->
-    <VBox fx:id="sidebar" spacing="20" alignment="TOP_CENTER"
-          prefWidth="240" styleClass="sidebar">
+    <left>
+        <VBox fx:id="sidebar"
+              styleClass="sidebar"
+              spacing="18"
+              prefWidth="230">
 
-        <VBox alignment="CENTER" spacing="10" styleClass="profile-box">
-            <Circle fx:id="avatar" radius="35"/>
-            <Label fx:id="nombreLabel" text="Usuario" styleClass="profile-name"/>
+            <padding>
+                <Insets top="25" right="25" bottom="25" left="25"/>
+            </padding>
+
+            <Circle fx:id="avatar"
+                    radius="35"
+                    styleClass="avatar-circle"/>
+
+            <Label fx:id="nombreLabel"
+                   styleClass="nombre-label"/>
+
+            <Button fx:id="btnCatedraticos"
+                    text="Catedráticos"
+                    styleClass="sidebar-button"/>
+
+            <Button fx:id="btnCursos"
+                    text="Cursos"
+                    styleClass="sidebar-button"/>
+
+            <Button fx:id="btnOrientador"
+                    text="Orientador"
+                    styleClass="sidebar-button"/>
+
+            <Button fx:id="btnLogout"
+                    text="Cerrar sesión"
+                    styleClass="sidebar-button logout-button"/>
         </VBox>
+    </left>
 
-        <Button fx:id="btnCatedraticos" text="Catedráticos" styleClass="sidebar-button"/>
-        <Button fx:id="btnCursos" text="Cursos" styleClass="sidebar-button"/>
-        <Button fx:id="btnOrientador" text="Orientador Profesional" styleClass="sidebar-button"/>
-
-        <Pane VBox.vgrow="ALWAYS"/>
-
-        <Button fx:id="btnLogout" text="Cerrar Sesión" styleClass="logout-button"/>
-    </VBox>
-
-    <!-- ========== SECCIÓN DINÁMICA ========== -->
-    <StackPane fx:id="contentPane" styleClass="content-pane"
-               BorderPane.alignment="CENTER"/>
+    <center>
+        <StackPane fx:id="contentPane"
+                   styleClass="content-pane"/>
+    </center>
 
 </BorderPane>

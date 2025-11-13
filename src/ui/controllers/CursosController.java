@@ -1,4 +1,4 @@
-package controller;
+package ui.controllers;
 
 import javafx.fxml.*;
 import javafx.scene.control.*;
@@ -10,6 +10,13 @@ import service.UVRateService;
 import java.util.List;
 
 public class CursosController implements SubControlador {
+
+    private DashboardController dashboard;
+
+    @Override
+    public void setDashboard(DashboardController dashboard) {
+        this.dashboard = dashboard;
+    }
 
     @FXML
     private TextField searchField;

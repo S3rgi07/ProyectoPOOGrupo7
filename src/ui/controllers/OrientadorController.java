@@ -1,4 +1,4 @@
-package controller;
+package ui.controllers;
 
 public class OrientadorController {
 

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+    fx:controller="ui.controllers.PerfilCatedraticoController"
+    spacing="20" alignment="TOP_CENTER"
+    styleClass="perfil-root">
+
+    <padding>
+        <Insets top="25" right="25" bottom="25" left="25" />
+    </padding>
+
+    <!-- Nombre del catedrático -->
+    <Label fx:id="lblNombre"
+        styleClass="perfil-nombre" />
+
+    <!-- Upvotes generales -->
+    <HBox spacing="8" alignment="CENTER">
+        <Label text="❤️" styleClass="heart" />
+        <Label fx:id="lblUpvotes" styleClass="upvote-count" />
+    </HBox>
+
+    <!-- Botón de Upvote -->
+    <Button fx:id="btnUpvote"
+        text="❤️ Upvote"
+        styleClass="btn-upvote" />
+
+
+    <!-- Cursos del catedrático -->
+    <VBox spacing="10" alignment="TOP_LEFT" maxWidth="420">
+        <padding>
+            <Insets top="0" right="0" bottom="0" left="0" />
+        </padding>
+
+        <Label text="Cursos impartidos:" styleClass="section-title" />
+
+        <VBox fx:id="listaCursos" spacing="6">
+            <padding>
+                <Insets top="0" right="0" bottom="0" left="0" />
+            </padding>
+        </VBox>
+    </VBox>
+
+</VBox>

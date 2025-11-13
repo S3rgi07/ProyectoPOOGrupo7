@@ -1,46 +1,59 @@
-.login-root {
-    -fx-background-color: linear-gradient(to bottom right, #74ebd5, #ACB6E5);
+/* ==== PALETA ==== */
+:root {
+    -color-bg: #f2f5f9;
+    -color-surface: #ffffff;
+    -color-primary: #3b82f6;
+    -color-text: #1e293b;
+    -color-muted: #64748b;
 }
 
-.login-title {
-    -fx-font-size: 34px;
+/* ==== ROOT PANE ==== */
+.root-pane {
+    -fx-background-color: linear-gradient(to bottom right, #e2e8f0, #f8fafc);
+}
+
+/* ==== TITLES ==== */
+.title-text {
+    -fx-font-size: 26px;
     -fx-font-weight: bold;
-    -fx-text-fill: white;
+    -fx-text-fill: -color-text;
 }
 
-.login-subtitle {
-    -fx-font-size: 18px;
-    -fx-text-fill: #f0f0f0;
+/* ==== CARD ==== */
+.card {
+    -fx-background-color: -color-surface;
+    -fx-padding: 30;
+    -fx-border-radius: 18;
+    -fx-background-radius: 18;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 18, 0.25, 0, 6);
 }
 
+/* ==== INPUTS ==== */
 .input-field {
-    -fx-background-radius: 12;
-    -fx-padding: 10;
-    -fx-font-size: 15px;
-    -fx-pref-width: 260;
+    -fx-pref-height: 40;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #d1d5db;
+    -fx-border-width: 1.2;
+    -fx-padding: 0 10;
 }
 
+/* ==== BUTTON ==== */
 .primary-button {
-    -fx-background-color: #6C63FF;
+    -fx-background-color: -color-primary;
     -fx-text-fill: white;
-    -fx-font-size: 15px;
-    -fx-padding: 10;
-    -fx-background-radius: 12;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-padding: 10 20;
+    -fx-font-size: 16px;
 }
 
-.secondary-button {
-    -fx-background-color: #ffffff55;
-    -fx-text-fill: white;
-    -fx-font-size: 15px;
-    -fx-padding: 10;
-    -fx-background-radius: 12;
-    -fx-border-color: white;
+.primary-button:hover {
+    -fx-background-color: derive(-color-primary, -15%);
 }
 
-.message-label.error {
-    -fx-text-fill: #ff5555;
-}
-
-.message-label.success {
-    -fx-text-fill: #55ff55;
+/* ==== SMALL TEXT ==== */
+.small-link {
+    -fx-font-size: 13px;
 }

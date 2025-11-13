@@ -1,4 +1,4 @@
-package controller;
+package ui.controllers;
 
 import javafx.fxml.*;
 import javafx.scene.control.*;
@@ -10,6 +10,13 @@ import service.UVRateService;
 import java.util.List;
 
 public class CatedraticosController implements SubControlador {
+
+    private DashboardController dashboard;
+
+    @Override
+    public void setDashboard(DashboardController dashboard) {
+        this.dashboard = dashboard;
+    }
 
     @FXML
     private TextField searchField;
@@ -26,25 +33,32 @@ public class CatedraticosController implements SubControlador {
         cargarCatedraticos();
     }
 
+    @FXML
+    public void initialize() {
+        searchField.textProperty().addListener((obs, oldValue, newValue) -> cargarCatedraticos());
+    }
+
     private void cargarCatedraticos() {
         listaCatedraticos.getChildren().clear();
-        String filtro = searchField.getText().toLowerCase();
+
+        String filtro = searchField.getText() == null
+                ? ""
+                : searchField.getText().toLowerCase();
 
         List<Catedratico> cats = service.obtenerTodosCatedraticos();
+        if (cats == null || cats.isEmpty())
+            return;
 
         for (Catedratico c : cats) {
             if (!c.getNombre().toLowerCase().contains(filtro))
                 continue;
 
-            HBox card = crearCard(c);
-            listaCatedraticos.getChildren().add(card);
+            listaCatedraticos.getChildren().add(crearCard(c));
         }
-
-        searchField.textProperty().addListener((obs, o, n) -> cargarCatedraticos());
     }
 
     private HBox crearCard(Catedratico c) {
-        HBox box = new HBox();
+        HBox box = new HBox(10);
         box.getStyleClass().add("card");
 
         Label nombre = new Label(c.getNombre());
@@ -58,9 +72,28 @@ public class CatedraticosController implements SubControlador {
         box.setOnMouseClicked(e -> abrirPerfil(c));
 
         return box;
+
     }
 
     private void abrirPerfil(Catedratico c) {
-        // más adelante generamos el perfil en FXML
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/ui/views/perfil_catedratico.fxml"));
+            Pane vista = loader.load();
+
+            // Pasar el catedrático al controlador del perfil
+            PerfilCatedraticoController controller = loader.getController();
+            controller.setCatedratico(c);
+
+            // Obtener el DashboardController
+            DashboardController dash = (DashboardController) listaCatedraticos.getScene().getRoot().getUserData();
+
+            // Mostrar la vista dentro del dashboard
+            dash.cargarVistaDirecta(vista);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 }

@@ -1,4 +1,4 @@
-package controller;
+package ui.controllers;
 
 import javafx.fxml.*;
 import javafx.scene.control.*;
