@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<BorderPane fx:id="root"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.DashboardController"
+            prefWidth="1100" prefHeight="650">
+
+    <!-- ========== LATERAL ========== -->
+    <VBox fx:id="sidebar" spacing="20" alignment="TOP_CENTER"
+          prefWidth="240" styleClass="sidebar">
+
+        <VBox alignment="CENTER" spacing="10" styleClass="profile-box">
+            <Circle fx:id="avatar" radius="35"/>
+            <Label fx:id="nombreLabel" text="Usuario" styleClass="profile-name"/>
+        </VBox>
+
+        <Button fx:id="btnCatedraticos" text="Catedráticos" styleClass="sidebar-button"/>
+        <Button fx:id="btnCursos" text="Cursos" styleClass="sidebar-button"/>
+        <Button fx:id="btnOrientador" text="Orientador Profesional" styleClass="sidebar-button"/>
+
+        <Pane VBox.vgrow="ALWAYS"/>
+
+        <Button fx:id="btnLogout" text="Cerrar Sesión" styleClass="logout-button"/>
+    </VBox>
+
+    <!-- ========== SECCIÓN DINÁMICA ========== -->
+    <StackPane fx:id="contentPane" styleClass="content-pane"
+               BorderPane.alignment="CENTER"/>
+
+</BorderPane>

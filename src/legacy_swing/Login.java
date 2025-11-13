@@ -1,7 +1,13 @@
+package legacy_swing;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
+
+import database.ConexionUVRate;
+import model.Estudiante;
+
 import java.sql.*;
 
 public class Login extends JFrame implements ActionListener {

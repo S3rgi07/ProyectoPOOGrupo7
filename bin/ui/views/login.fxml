@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.LoginController"
+            fx:id="root"
+            styleClass="login-root"
+            prefWidth="420" prefHeight="520">
+
+    <VBox spacing="20" alignment="CENTER"
+          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
+          AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0">
+
+        <Label text="UVRate" styleClass="login-title"/>
+        <Label text="Inicia sesión" styleClass="login-subtitle"/>
+
+        <VBox spacing="10" alignment="CENTER">
+            <TextField fx:id="correoField" promptText="Correo" styleClass="input-field"/>
+            <PasswordField fx:id="passwordField" promptText="Contraseña" styleClass="input-field"/>
+        </VBox>
+
+        <Label fx:id="messageLabel" text="" styleClass="message-label"/>
+
+        <VBox spacing="10" alignment="CENTER">
+            <Button fx:id="loginButton" text="Ingresar" styleClass="primary-button"
+                    prefWidth="250" onAction="#onLogin"/>
+            <Button fx:id="registroButton" text="Crear cuenta" styleClass="secondary-button"
+                    prefWidth="250" onAction="#onRegistro"/>
+        </VBox>
+
+    </VBox>
+</AnchorPane>

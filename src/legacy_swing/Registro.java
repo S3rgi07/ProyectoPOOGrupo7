@@ -1,7 +1,12 @@
+package legacy_swing;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
+
+import database.ConexionUVRate;
+
 import java.sql.*;
 
 public class Registro extends JFrame implements ActionListener {

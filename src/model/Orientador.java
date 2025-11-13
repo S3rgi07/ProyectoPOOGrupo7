@@ -1,3 +1,5 @@
+package model;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,25 +8,24 @@ public class Orientador {
     private List<Meta> metas;
     private List<Curso> cursos;
 
-// Constructor
-public Orientador() {
-    this.metas = new ArrayList<>();
-    this.cursos = new ArrayList<>();
+    // Constructor
+    public Orientador() {
+        this.metas = new ArrayList<>();
+        this.cursos = new ArrayList<>();
     }
 
-// Método que sugiere los cursos al estudiante según la meta que tenga.
-public List<Curso> sugerirCursos(String metaNombre) {
-    List<Curso> sugeridos = new ArrayList<>();
+    // Método que sugiere los cursos al estudiante según la meta que tenga.
+    public List<Curso> sugerirCursos(String metaNombre) {
+        List<Curso> sugeridos = new ArrayList<>();
 
-
-// Para poder buscar las metas por nombre
+        // Para poder buscar las metas por nombre
         for (Meta meta : metas) {
             String metasNombre = "";
             if (meta.getNombre().equalsIgnoreCase(metasNombre)) {
                 String competenciaMeta = meta.getCompetencias();
 
-// Para poder buscar cursos que coincidan con las competencias del estudiante.
-            for (Curso curso : cursos) {
+                // Para poder buscar cursos que coincidan con las competencias del estudiante.
+                for (Curso curso : cursos) {
                     if (curso.getCompetencias().contains(competenciaMeta)) {
                         sugeridos.add(curso);
                     }
@@ -34,9 +35,7 @@ public List<Curso> sugerirCursos(String metaNombre) {
         return sugeridos;
     }
 
-    
-
-// Métodos para agregar metas y cursos
+    // Métodos para agregar metas y cursos
     public void agregarMeta(Meta meta) {
         metas.add(meta);
     }
@@ -45,7 +44,7 @@ public List<Curso> sugerirCursos(String metaNombre) {
         cursos.add(curso);
     }
 
-// Getters
+    // Getters
     public List<Meta> getMetas() {
         return metas;
     }
@@ -54,13 +53,13 @@ public List<Curso> sugerirCursos(String metaNombre) {
         return cursos;
     }
 
-// Setters
+    // Setters
     public void setMetas(List<Meta> metas) {
         this.metas = metas;
     }
 
     public void setCursos(List<Curso> cursos) {
-    this.cursos = cursos;
+        this.cursos = cursos;
     }
     // :)
 }

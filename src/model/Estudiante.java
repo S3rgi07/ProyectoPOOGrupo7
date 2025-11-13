@@ -1,3 +1,5 @@
+package model;
+
 public class Estudiante {
 
     // atributos
@@ -22,7 +24,7 @@ public class Estudiante {
 
     // get y setters
 
-     public int getId() {
+    public int getId() {
         return id;
     }
 
@@ -49,8 +51,9 @@ public class Estudiante {
     public String getCorreo() {
         return correo;
     }
-    //se me ocurrió agregar validaciones en los setters :D
-public void setCorreo(String correo) {
+
+    // se me ocurrió agregar validaciones en los setters :D
+    public void setCorreo(String correo) {
         if (correo == null || !correo.contains("@") || correo.trim().isEmpty()) {
             throw new IllegalArgumentException("El correo es inválido.");
         }
@@ -67,7 +70,6 @@ public void setCorreo(String correo) {
 
     // son metódos para manejar cursos a través de estadoCursos :D
 
-
     // Inicia un curso en el estado de este estudiante
 
     public boolean iniciarCurso(Curso curso) {
@@ -78,6 +80,7 @@ public void setCorreo(String correo) {
     public boolean finalizarCurso(Curso curso) {
         return estadoCursos.finalizarCurso(curso);
     }
+
     // Verifica si el estudiante está actualmente cursando el curso
     public boolean estaCursando(Curso curso) {
         return estadoCursos.estaCursando(curso);
@@ -87,6 +90,5 @@ public void setCorreo(String correo) {
     public boolean yaCursado(Curso curso) {
         return estadoCursos.yaCursado(curso);
     }
-    
-    
+
 }

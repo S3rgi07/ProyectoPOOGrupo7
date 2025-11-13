@@ -1,3 +1,5 @@
+package model;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +35,8 @@ public class EstadoCursos {
     // métodos
 
     /**
-     * va a agregar un curso a la lista de actuales si no existe 
+     * va a agregar un curso a la lista de actuales si no existe
+     * 
      * @return true si se agregó y false si no (null o duplicado)
      */
     public boolean iniciarCurso(Curso curso) {
@@ -50,7 +53,8 @@ public class EstadoCursos {
     }
 
     /**
-     * Mueve un curso de actuales a historia mostrando  que ya se ha finalizado yei
+     * Mueve un curso de actuales a historia mostrando que ya se ha finalizado yei
+     * 
      * @return true si se movió, false si no (null o no estaba en actuales)
      */
     public boolean finalizarCurso(Curso curso) {
@@ -71,18 +75,17 @@ public class EstadoCursos {
         return true;
     }
 
- // va a verificar si un curso está ya está en la lista de actuales
+    // va a verificar si un curso está ya está en la lista de actuales
     public boolean estaCursando(Curso curso) {
         return curso != null && cursosActuales.contains(curso);
     }
 
-// va a verificar si un curso ya fue finalizado y si está en la historia
+    // va a verificar si un curso ya fue finalizado y si está en la historia
     public boolean yaCursado(Curso curso) {
         return curso != null && cursosHistoria.contains(curso);
     }
 
-    
-    //  Limpia todas las listas 
+    // Limpia todas las listas
     public void resetEstado() {
         cursosActuales.clear();
         cursosHistoria.clear();

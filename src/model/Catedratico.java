@@ -1,11 +1,13 @@
+package model;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
 /**
  * Clase Catedratico
  * Incluye constructores compatibles con el controller:
- *   Catedratico(int id, String nombre, Upvotes upvotes, ArrayList<Curso> cursos)
- *   Catedratico(String nombre, Upvotes upvotes, ArrayList<Curso> cursos)
+ * Catedratico(int id, String nombre, Upvotes upvotes, ArrayList<Curso> cursos)
+ * Catedratico(String nombre, Upvotes upvotes, ArrayList<Curso> cursos)
  */
 public class Catedratico {
     private int id;
@@ -43,7 +45,7 @@ public class Catedratico {
 
     public void setId(int id) {
         this.id = id;
-    } 
+    }
 
     public String getNombre() {
         return nombre;
@@ -78,14 +80,20 @@ public class Catedratico {
     // ---------------- Utilidades ----------------
 
     public void agregarCurso(Curso curso) {
-        if (curso == null) return;
-        if (this.cursos == null) this.cursos = new ArrayList<>();
+        if (curso == null)
+            return;
+        if (this.cursos == null)
+            this.cursos = new ArrayList<>();
         // evita duplicados según id si es posible
         boolean existe = false;
         for (Curso c : this.cursos) {
-            if (c.getCodigo() == curso.getCodigo()) { existe = true; break; }
+            if (c.getCodigo() == curso.getCodigo()) {
+                existe = true;
+                break;
+            }
         }
-        if (!existe) this.cursos.add(curso);
+        if (!existe)
+            this.cursos.add(curso);
     }
 
     /** Devuelve la cantidad de upvotes (si Upvotes implementa getUpvotes()) */
@@ -106,8 +114,10 @@ public class Catedratico {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Catedratico)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof Catedratico))
+            return false;
         Catedratico that = (Catedratico) o;
         return id == that.id;
     }

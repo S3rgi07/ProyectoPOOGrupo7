@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.CursosController">
+
+    <VBox spacing="15" padding="20" alignment="CENTER_LEFT">
+
+        <TextField fx:id="searchField" 
+                   promptText="Buscar curso..."
+                   styleClass="search-field"/>
+
+        <ScrollPane fitToWidth="true" styleClass="scroll-pane">
+            <VBox fx:id="listaCursos" spacing="10" padding="10"/>
+        </ScrollPane>
+
+    </VBox>
+
+</BorderPane>

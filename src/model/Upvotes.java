@@ -1,14 +1,17 @@
+package model;
+
 import java.time.LocalDate;
 
 /**
  * Upvotes
  *
  * - Soporta dos modos de uso:
- *   1) Representar un conteo total de upvotes (new Upvotes(int count))
- *   2) Representar un upvote individual (new Upvotes(Catedratico, Estudiante, Curso))
+ * 1) Representar un conteo total de upvotes (new Upvotes(int count))
+ * 2) Representar un upvote individual (new Upvotes(Catedratico, Estudiante,
+ * Curso))
  *
  * - Provee getUpvotes() (para compatibilidad con el resto del código),
- *   y métodos increment/ decrement para actualizar el conteo en memoria.
+ * y métodos increment/ decrement para actualizar el conteo en memoria.
  *
  * Nota: No es una colección. No uses contains/add sobre esta clase.
  */
@@ -50,7 +53,10 @@ public class Upvotes {
 
     // ---------------- Getters ----------------
 
-    /** Devuelve el conteo de upvotes (compatible con llamadas existentes getUpvotes()) */
+    /**
+     * Devuelve el conteo de upvotes (compatible con llamadas existentes
+     * getUpvotes())
+     */
     public int getUpvotes() {
         return upvoteCount;
     }
@@ -89,7 +95,8 @@ public class Upvotes {
     }
 
     public void decrement() {
-        if (this.upvoteCount > 0) this.upvoteCount--;
+        if (this.upvoteCount > 0)
+            this.upvoteCount--;
     }
 
     public void setCatedratico(Catedratico catedratico) {

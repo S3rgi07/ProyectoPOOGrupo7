@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.PerfilCursoController"
+      spacing="15" padding="25" alignment="TOP_LEFT">
+
+    <Label fx:id="nombreLabel" styleClass="profile-title"/>
+
+    <Label fx:id="descLabel" wrapText="true" styleClass="profile-text"/>
+
+    <Label text="Catedráticos que imparten este curso:" styleClass="section-title"/>
+
+    <VBox fx:id="listaCatedraticos" spacing="8"/>
+
+</VBox>

@@ -1,5 +1,13 @@
+package legacy_swing;
+
 import java.sql.*;
 import java.util.ArrayList;
+
+import database.ConexionUVRate;
+import model.Catedratico;
+import model.Curso;
+import model.Estudiante;
+import model.Upvotes;
 
 public class UVRate {
 

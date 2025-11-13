@@ -1,4 +1,11 @@
+package legacy_swing;
+
 import javax.swing.*;
+
+import model.Catedratico;
+import model.Curso;
+import model.Estudiante;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
