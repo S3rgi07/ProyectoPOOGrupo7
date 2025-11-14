@@ -14,6 +14,7 @@ public class Catedratico {
     private String nombre;
     private Upvotes upvotesCatedratico;
     private ArrayList<Curso> cursos;
+    private int semestres;
 
     // ---------------- Constructores ----------------
 
@@ -30,6 +31,14 @@ public class Catedratico {
         this.nombre = nombre;
         this.upvotesCatedratico = upvotesCatedratico != null ? upvotesCatedratico : new Upvotes(0);
         this.cursos = cursos != null ? cursos : new ArrayList<>();
+    }
+
+    public Catedratico(int id, String nombre, Upvotes upvotes, ArrayList<Curso> cursos, int semestres) {
+        this.id = id;
+        this.nombre = nombre;
+        this.upvotesCatedratico = upvotes;
+        this.cursos = cursos;
+        this.semestres = semestres;
     }
 
     /** Constructor mínimo */
@@ -125,5 +134,13 @@ public class Catedratico {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public int getSemestres() {
+        return semestres;
+    }
+
+    public void setSemestres(int semestres) {
+        this.semestres = semestres;
     }
 }

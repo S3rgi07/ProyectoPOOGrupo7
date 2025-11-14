@@ -3,6 +3,8 @@ package ui.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import model.Catedratico;
 import model.Curso;
 import model.Estudiante;
 import service.UVRateService;
@@ -26,6 +28,11 @@ public class PerfilCursoController implements SubControlador {
 
     @FXML
     private Button btnVolver;
+
+    @FXML
+    private VBox boxRankingUpvotes;
+    @FXML
+    private VBox boxRankingSemestres;
 
     private Estudiante estudiante;
     private UVRateService service;
@@ -63,5 +70,33 @@ public class PerfilCursoController implements SubControlador {
                 (curso.getCompetencias() == null || curso.getCompetencias().isEmpty())
                         ? "No se especificaron competencias."
                         : curso.getCompetencias());
+
+        cargarRankings();
+
     }
+
+    private void cargarRankings() {
+        boxRankingUpvotes.getChildren().clear();
+        boxRankingSemestres.getChildren().clear();
+
+        int idCurso = curso.getCodigo();
+
+        var rankUpvotes = service.obtenerRankingUpvotesPorCurso(idCurso);
+        var rankSemestres = service.obtenerRankingSemestresPorCurso(idCurso);
+
+        int pos = 1;
+        for (Catedratico c : rankUpvotes) {
+            Label lbl = new Label(pos + ". " + c.getNombre() + " (" + c.getCantidadUpvotes() + ")");
+            boxRankingUpvotes.getChildren().add(lbl);
+            pos++;
+        }
+
+        pos = 1;
+        for (Catedratico c : rankSemestres) {
+            Label lbl = new Label(pos + ". " + c.getNombre() + " (" + c.getSemestres() + ")");
+            boxRankingSemestres.getChildren().add(lbl);
+            pos++;
+        }
+    }
+
 }

@@ -84,13 +84,14 @@ public class UVRateService {
                 String nombre = rs.getString("nombre");
                 int totalUpvotes = rs.getInt("total_upvotes");
 
-                catedratico.setSemestres(rs.getInt("semestres"));
-
                 Upvotes upvotes = new Upvotes(totalUpvotes);
                 ArrayList<Curso> cursos = new ArrayList<>();
                 cursos.add(obtenerCurso(idCurso));
 
-                lista.add(new Catedratico(idCat, nombre, upvotes, cursos));
+                int semestres = rs.getInt("semestres");
+
+                lista.add(new Catedratico(idCat, nombre, upvotes, cursos, semestres));
+
             }
 
         } catch (SQLException e) {
@@ -236,14 +237,14 @@ public class UVRateService {
     private Catedratico mapearCatedratico(ResultSet rs) throws SQLException {
         int idCat = rs.getInt("id");
         String nombreCat = rs.getString("nombre");
+        int semestres = rs.getInt("semestres");
 
-        // Obtener todos los cursos de este catedrático desde la tabla intermedia
         ArrayList<Curso> cursos = obtenerCursosPorCatedratico(idCat);
 
         int upvoteCount = contarUpvotes(idCat);
         Upvotes upvotes = new Upvotes(upvoteCount);
 
-        return new Catedratico(idCat, nombreCat, upvotes, cursos);
+        return new Catedratico(idCat, nombreCat, upvotes, cursos, semestres);
     }
 
     /**
@@ -305,6 +306,35 @@ public class UVRateService {
         }
 
         return sugeridos;
+    }
+
+    public ArrayList<Catedratico> obtenerRankingUpvotesPorCurso(int idCurso) {
+        ArrayList<Catedratico> lista = obtenerCatedraticosPorCurso(idCurso);
+        lista.sort((a, b) -> Integer.compare(
+                b.getCantidadUpvotes(),
+                a.getCantidadUpvotes()));
+        return lista;
+    }
+
+    public ArrayList<Catedratico> obtenerRankingSemestresPorCurso(int idCurso) {
+        ArrayList<Catedratico> lista = obtenerCatedraticosPorCurso(idCurso);
+
+        lista.sort((a, b) -> Integer.compare(
+                b.getSemestres(),
+                a.getSemestres()));
+        return lista;
+
+    }
+
+    public int obtenerPosicionCatedraticoEnCurso(int idCatedratico, int idCurso) {
+        ArrayList<Catedratico> ranking = obtenerRankingUpvotesPorCurso(idCurso);
+
+        for (int i = 0; i < ranking.size(); i++) {
+            if (ranking.get(i).getId() == idCatedratico) {
+                return i + 1; // posiciones empiezan en 1
+            }
+        }
+        return -1; // no imparte ese curso
     }
 
 }

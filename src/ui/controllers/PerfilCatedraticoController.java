@@ -24,6 +24,9 @@ public class PerfilCatedraticoController implements SubControlador {
     private VBox listaCursos;
 
     @FXML
+    private VBox boxRankingCursos;
+
+    @FXML
     private Button btnVolver;
 
     private Catedratico catedratico;
@@ -62,6 +65,8 @@ public class PerfilCatedraticoController implements SubControlador {
 
         cargarCursos();
         configurarBotonUpvote();
+        cargarRankingsPorCurso();
+
     }
 
     // ============================================================
@@ -126,6 +131,20 @@ public class PerfilCatedraticoController implements SubControlador {
             btnUpvote.getStyleClass().add("btn-upvote-voted");
 
         btnUpvote.setText("Quitar Upvote"); // favorite
+    }
+
+    private void cargarRankingsPorCurso() {
+        boxRankingCursos.getChildren().clear();
+
+        for (Curso c : catedratico.getCursos()) {
+            int pos = service.obtenerPosicionCatedraticoEnCurso(catedratico.getId(), c.getCodigo());
+
+            Label lbl = new Label(
+                    c.getNombre() + ": " +
+                            (pos == -1 ? "No aparece en ranking" : "Posición #" + pos));
+
+            boxRankingCursos.getChildren().add(lbl);
+        }
     }
 
 }

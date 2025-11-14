@@ -51,6 +51,21 @@
         <Label fx:id="lblCompetencias" wrapText="true" styleClass="section-text" />
       </VBox>
 
+      <HBox spacing="30" alignment="TOP_CENTER">
+
+        <VBox spacing="10">
+          <Label text="Ranking por Upvotes" styleClass="section-title" />
+          <VBox fx:id="boxRankingUpvotes" spacing="5" />
+        </VBox>
+
+        <VBox spacing="10">
+          <Label text="Ranking por Semestres" styleClass="section-title" />
+          <VBox fx:id="boxRankingSemestres" spacing="5" />
+        </VBox>
+
+      </HBox>
+
+
     </VBox>
   </center>
 

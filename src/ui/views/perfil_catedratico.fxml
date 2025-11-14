@@ -5,8 +5,8 @@
 <?import javafx.geometry.Insets?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="ui.controllers.PerfilCatedraticoController"
-            styleClass="perfil-root">
+    fx:controller="ui.controllers.PerfilCatedraticoController"
+    styleClass="perfil-root">
 
     <top>
         <HBox spacing="10" alignment="CENTER_LEFT" styleClass="perfil-topbar">
@@ -15,31 +15,37 @@
             </padding>
 
             <Button fx:id="btnVolver"
-                    text="⟵ Volver"
-                    styleClass="btn-volver" />
+                text="⟵ Volver"
+                styleClass="btn-volver" />
         </HBox>
     </top>
 
     <center>
+
+        <VBox spacing="15">
+            <Label text="Ranking por curso" styleClass="section-title" />
+            <VBox fx:id="boxRankingCursos" spacing="6" />
+        </VBox>
+
         <VBox spacing="25" alignment="TOP_CENTER" styleClass="perfil-card">
             <padding>
-                <Insets top="30" bottom="30" left="40" right="40"/>
+                <Insets top="30" bottom="30" left="40" right="40" />
             </padding>
 
-            <Label fx:id="lblNombre" styleClass="perfil-nombre"/>
+            <Label fx:id="lblNombre" styleClass="perfil-nombre" />
 
             <HBox spacing="12" alignment="CENTER">
-                <Label fx:id="lblUpvotes" styleClass="upvote-count"/>
+                <Label fx:id="lblUpvotes" styleClass="upvote-count" />
             </HBox>
 
             <Button fx:id="btnUpvote"
-                    text="Upvote"
-                    styleClass="btn-upvote"
-                    prefWidth="180"/>
+                text="Upvote"
+                styleClass="btn-upvote"
+                prefWidth="180" />
 
             <VBox spacing="15" maxWidth="480">
-                <Label text="Cursos impartidos:" styleClass="section-title"/>
-                <VBox fx:id="listaCursos" spacing="8"/>
+                <Label text="Cursos impartidos:" styleClass="section-title" />
+                <VBox fx:id="listaCursos" spacing="8" />
             </VBox>
 
         </VBox>
