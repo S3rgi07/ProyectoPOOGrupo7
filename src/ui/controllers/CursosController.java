@@ -63,6 +63,13 @@ public class CursosController implements SubControlador {
             System.out.println("Servicio devolvió null? " + (cursos == null));
 
         }
+
+        if (listaCursos.getChildren().isEmpty()) {
+            Label empty = new Label("No hay cursos que coincidan con la búsqueda.");
+            empty.getStyleClass().add("section-text");
+            listaCursos.getChildren().add(empty);
+        }
+
     }
 
     private HBox crearCard(Curso c) {

@@ -5,33 +5,41 @@
 <?import javafx.geometry.*?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="ui.controllers.CatedraticosController"
-            prefWidth="900" prefHeight="650">
+    fx:controller="ui.controllers.CatedraticosController"
+    prefWidth="900" prefHeight="650">
 
     <center>
-        <VBox spacing="15" alignment="CENTER_LEFT">
+        <VBox spacing="15" alignment="TOP_CENTER">
 
             <padding>
-                <Insets top="20" right="20" bottom="20" left="20"/>
+                <Insets top="20" right="20" bottom="20" left="20" />
             </padding>
 
+            <!-- TÍTULO -->
+            <Label text="Listado de Catedráticos"
+                   styleClass="title-text"
+                   alignment="CENTER" />
+
+            <!-- BUSCADOR -->
             <TextField fx:id="searchField"
                        promptText="Buscar catedrático..."
-                       styleClass="search-field"/>
+                       maxWidth="450"
+                       styleClass="input-field" />
 
+            <!-- LISTA -->
             <ScrollPane fitToWidth="true" styleClass="scroll-pane">
                 <content>
                     <VBox fx:id="listaCatedraticos"
                           spacing="10"
                           alignment="TOP_LEFT">
-
                         <padding>
-                            <Insets top="10" right="10" bottom="10" left="10"/>
+                            <Insets top="10" right="10" bottom="10" left="10" />
                         </padding>
-
                     </VBox>
                 </content>
             </ScrollPane>
+
         </VBox>
     </center>
+
 </BorderPane>

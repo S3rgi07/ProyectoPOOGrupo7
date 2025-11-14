@@ -8,47 +8,52 @@
 <?import javafx.geometry.Insets?>
 
 <BorderPane fx:id="root"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="ui.controllers.DashboardController"
-            styleClass="dashboard-root">
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="ui.controllers.DashboardController"
+        styleClass="dashboard-root">
 
-    <left>
-        <VBox fx:id="sidebar"
-              styleClass="sidebar"
-              spacing="18"
-              prefWidth="230">
+        <left>
+                <VBox fx:id="sidebar"
+                        styleClass="sidebar"
+                        spacing="18"
+                        prefWidth="230">
 
-            <padding>
-                <Insets top="25" right="25" bottom="25" left="25"/>
-            </padding>
+                        <padding>
+                                <Insets top="25" right="25" bottom="25" left="25" />
+                        </padding>
 
-            <Circle fx:id="avatar"
-                    radius="35"
-                    styleClass="avatar-circle"/>
+                        <Circle fx:id="avatar"
+                                radius="35"
+                                styleClass="avatar-circle" />
 
-            <Label fx:id="nombreLabel"
-                   styleClass="nombre-label"/>
+                        <Label fx:id="nombreLabel"
+                                styleClass="nombre-label" />
 
-            <Button fx:id="btnCatedraticos"
-                    text="Catedráticos"
-                    styleClass="sidebar-button"/>
+                        <Button fx:id="btnCatedraticos"
+                                text="Catedráticos"
+                                styleClass="sidebar-button" />
 
-            <Button fx:id="btnCursos"
-                    text="Cursos"
-                    styleClass="sidebar-button"/>
+                        <Button fx:id="btnCursos"
+                                text="Cursos"
+                                styleClass="sidebar-button" />
 
-            <Button fx:id="btnOrientador"
-                    text="Orientador"
-                    styleClass="sidebar-button"/>
+                        <Button fx:id="btnOrientador"
+                                text="Orientador"
+                                styleClass="sidebar-button" />
 
-            <Button fx:id="btnLogout" text="Cerrar sesión" styleClass="logout-button"/>
+                        <Button fx:id="btnLogout" text="Cerrar sesión" styleClass="logout-button" />
 
-        </VBox>
-    </left>
+                </VBox>
+        </left>
 
-    <center>
-        <StackPane fx:id="contentPane"
-                   styleClass="content-pane"/>
-    </center>
+        <center>
+                <StackPane fx:id="contentPane"
+                        styleClass="content-pane" />
+        </center>
+
+        <bottom>
+                <Label text="UVRate — v1.0" styleClass="footer-label" />
+        </bottom>
+
 
 </BorderPane>

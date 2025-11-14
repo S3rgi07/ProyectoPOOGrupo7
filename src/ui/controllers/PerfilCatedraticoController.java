@@ -1,8 +1,10 @@
 package ui.controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import model.Catedratico;
 import model.Curso;
@@ -101,17 +103,34 @@ public class PerfilCatedraticoController implements SubControlador {
     }
 
     private void toggleUpvote() {
+        try {
+            // 1. Cambiar en la BD
+            service.toggleUpvote(estudiante.getId(), catedratico.getId());
 
-        service.toggleUpvote(estudiante.getId(), catedratico.getId());
+            // 2. Obtener datos ACTUALIZADOS del catedrático
+            Catedratico actualizado = service.obtenerCatedraticoPorId(catedratico.getId());
 
-        boolean yaVoto = service.yaVoto(estudiante.getId(), catedratico.getId());
+            // 3. Recargar el FXML
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/ui/views/perfil_catedratico.fxml"));
 
-        if (yaVoto)
-            activarEstiloVotado();
-        else
-            activarEstiloNormal();
+            Pane vista = loader.load(); // ← YA NO ES VBox
 
-        lblUpvotes.setText(String.valueOf(service.contarUpvotes(catedratico.getId())));
+            PerfilCatedraticoController controller = loader.getController();
+
+            // 4. Pasar contexto y dashboard otra vez
+            controller.setDashboard(dashboard);
+            controller.setContext(estudiante, service);
+
+            // 5. Pasar el catedrático ACTUALIZADO
+            controller.setCatedratico(actualizado);
+
+            // 6. Mostrar vista refrescada
+            dashboard.cargarVistaDirecta(vista);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // ============================================================

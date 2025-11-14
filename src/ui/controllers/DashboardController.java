@@ -1,5 +1,6 @@
 package ui.controllers;
 
+import javafx.animation.FadeTransition;
 import javafx.fxml.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -9,6 +10,8 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import model.Estudiante;
 import service.UVRateService;
+import javafx.animation.FadeTransition;
+import javafx.util.Duration;
 
 public class DashboardController {
 
@@ -71,9 +74,6 @@ public class DashboardController {
         // Se hará cuando la escena exista
         contentPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
-
-                newScene.getStylesheets().clear();
-
                 // CSS global
                 newScene.getStylesheets().add(
                         getClass().getResource("/ui/views/styles/common.css").toExternalForm());
@@ -122,6 +122,12 @@ public class DashboardController {
             }
 
             contentPane.getChildren().setAll(vista);
+
+            // Animación suave al cargar vista
+            FadeTransition ft = new FadeTransition(Duration.millis(180), vista);
+            ft.setFromValue(0);
+            ft.setToValue(1);
+            ft.play();
 
         } catch (Exception e) {
             System.out.println("ERROR cargando: /ui/views/" + fxml);

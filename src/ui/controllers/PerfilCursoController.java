@@ -99,4 +99,9 @@ public class PerfilCursoController implements SubControlador {
         }
     }
 
+    @FXML
+    private void volverCursos() {
+        dashboard.cargarVista("cursos.fxml");
+    }
+
 }

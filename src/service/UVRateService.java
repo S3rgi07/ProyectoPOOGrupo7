@@ -358,4 +358,24 @@ public class UVRateService {
         return null;
     }
 
+    public Catedratico obtenerCatedraticoPorId(int id) {
+        String sql = "SELECT * FROM catedratico WHERE id = ?";
+
+        try (Connection conn = ConexionUVRate.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return mapearCatedratico(rs);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 }

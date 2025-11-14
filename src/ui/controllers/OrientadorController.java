@@ -67,6 +67,7 @@ public class OrientadorController implements SubControlador {
 
             boxResultados.getChildren().add(crearCardCurso(c));
         }
+
     }
 
     private HBox crearCardCurso(Curso curso) {

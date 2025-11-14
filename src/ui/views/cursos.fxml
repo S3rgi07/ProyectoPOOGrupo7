@@ -5,36 +5,35 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="ui.controllers.CursosController">
+    fx:controller="ui.controllers.CursosController">
 
     <center>
-        <VBox fx:id="rootBox"
-              spacing="15"
-              alignment="TOP_LEFT">
+        <VBox spacing="20" alignment="TOP_CENTER">
 
             <padding>
-                <Insets top="20" bottom="20" left="20" right="20"/>
+                <Insets top="20" left="20" right="20" bottom="20" />
             </padding>
 
+            <Label text="Listado de Cursos" styleClass="title-text" />
+
             <TextField fx:id="searchField"
-                       promptText="Buscar curso..."
-                       styleClass="search-field"
-                       maxWidth="300"/>
+                promptText="Busca un curso..."
+                maxWidth="450"
+                styleClass="input-field" />
 
             <ScrollPane fx:id="scrollPane"
-                        fitToWidth="true"
-                        hbarPolicy="NEVER"
-                        vbarPolicy="AS_NEEDED">
-
+                fitToWidth="true"
+                hbarPolicy="NEVER"
+                vbarPolicy="AS_NEEDED">
                 <VBox fx:id="listaCursos" spacing="10">
                     <padding>
-                        <Insets top="10" bottom="10" left="10" right="10"/>
+                        <Insets top="10" bottom="10" left="10" right="10" />
                     </padding>
                 </VBox>
-
             </ScrollPane>
 
         </VBox>
     </center>
+
 
 </BorderPane>

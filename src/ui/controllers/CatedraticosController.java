@@ -56,6 +56,13 @@ public class CatedraticosController implements SubControlador {
 
             listaCatedraticos.getChildren().add(crearCard(c));
         }
+
+        if (listaCatedraticos.getChildren().isEmpty()) {
+            Label empty = new Label("No se encontraron coincidencias");
+            empty.getStyleClass().add("section-text");
+            listaCatedraticos.getChildren().add(empty);
+        }
+
     }
 
     private HBox crearCard(Catedratico c) {

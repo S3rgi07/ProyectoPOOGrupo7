@@ -23,6 +23,12 @@
     </HBox>
   </top>
 
+  <Label text="← Regresar a Cursos"
+    onMouseClicked="#volverCursos"
+    styleClass="small-link"
+    style="-fx-cursor: hand;" />
+
+
   <!-- ===================== CONTENIDO CENTRAL ===================== -->
   <center>
     <VBox spacing="25" alignment="TOP_CENTER" styleClass="perfil-card">
