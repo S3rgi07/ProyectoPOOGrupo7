@@ -3,19 +3,18 @@ package ui.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.geometry.Insets;
 import model.Curso;
 import model.Estudiante;
+import model.MetaData;
 import service.UVRateService;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.scene.layout.Pane;
 
 import java.util.List;
 
 public class OrientadorController implements SubControlador {
 
     @FXML
-    private TextField txtMeta;
+    private ComboBox<String> comboMeta;
 
     @FXML
     private VBox boxResultados;
@@ -34,27 +33,38 @@ public class OrientadorController implements SubControlador {
         this.estudiante = est;
         this.service = serv;
 
-        // Listener de búsqueda en vivo
-        txtMeta.textProperty().addListener((obs, oldV, newV) -> cargarSugerencias());
+        cargarMetasDisponibles();
+
+        comboMeta.valueProperty().addListener((obs, o, n) -> cargarSugerencias());
+    }
+
+    /** Llena el ComboBox con todas las metas del MetaData */
+    private void cargarMetasDisponibles() {
+        comboMeta.getItems().setAll(MetaData.getMetas()); // << Nuevo método
     }
 
     private void cargarSugerencias() {
         boxResultados.getChildren().clear();
 
-        String meta = txtMeta.getText().trim();
-        if (meta.isEmpty())
+        String meta = comboMeta.getValue();
+        if (meta == null || meta.isEmpty())
             return;
 
-        List<Curso> sugeridos = service.sugerirCursosPorMeta(meta);
+        List<String> codigos = MetaData.buscarCursos(meta);
 
-        if (sugeridos.isEmpty()) {
+        if (codigos.isEmpty()) {
             Label empty = new Label("No hay cursos asociados a esa meta.");
             empty.getStyleClass().add("section-text");
             boxResultados.getChildren().add(empty);
             return;
         }
 
-        for (Curso c : sugeridos) {
+        for (String codigo : codigos) {
+            Curso c = new Curso(
+                    -1,
+                    codigo, // mostramos código como nombre
+                    "Curso recomendado según tu meta.");
+
             boxResultados.getChildren().add(crearCardCurso(c));
         }
     }
@@ -69,37 +79,13 @@ public class OrientadorController implements SubControlador {
         Label nombre = new Label(curso.getNombre());
         nombre.getStyleClass().add("card-title");
 
-        Label desc = new Label(
-                (curso.getDescripcion() == null || curso.getDescripcion().isEmpty())
-                        ? "Sin descripción disponible."
-                        : curso.getDescripcion());
+        Label desc = new Label(curso.getDescripcion());
         desc.getStyleClass().add("section-text");
         desc.setWrapText(true);
 
         text.getChildren().addAll(nombre, desc);
         card.getChildren().add(text);
 
-        card.setOnMouseClicked(e -> abrirPerfilCurso(curso));
-
         return card;
-    }
-
-    private void abrirPerfilCurso(Curso curso) {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/ui/views/perfil_curso.fxml"));
-
-            Pane vista = loader.load();
-            PerfilCursoController controller = loader.getController();
-
-            controller.setDashboard(dashboard);
-            controller.setContext(estudiante, service);
-            controller.setCurso(curso);
-
-            dashboard.cargarVistaDirecta(vista);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

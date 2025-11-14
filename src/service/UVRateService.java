@@ -337,4 +337,25 @@ public class UVRateService {
         return -1; // no imparte ese curso
     }
 
+    public Curso obtenerCursoPorCodigo(String codigo) {
+        try (Connection conn = ConexionUVRate.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(
+                        "SELECT * FROM curso WHERE codigo = ?")) {
+
+            stmt.setString(1, codigo);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return new Curso(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getString("descripcion"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

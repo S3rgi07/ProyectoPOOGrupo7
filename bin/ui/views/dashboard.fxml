@@ -41,9 +41,8 @@
                     text="Orientador"
                     styleClass="sidebar-button"/>
 
-            <Button fx:id="btnLogout"
-                    text="Cerrar sesión"
-                    styleClass="sidebar-button logout-button"/>
+            <Button fx:id="btnLogout" text="Cerrar sesión" styleClass="logout-button"/>
+
         </VBox>
     </left>
 

@@ -7,25 +7,31 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="ui.controllers.OrientadorController">
 
-    <VBox spacing="20" alignment="TOP_CENTER">
-        <padding>
-            <Insets top="20" left="25" right="25" bottom="20"/>
-        </padding>
-
-        <Label text="Orientador de cursos" styleClass="title-text"/>
-
-        <TextField fx:id="txtMeta"
-                   promptText="Escribe tu meta... (Ej: IA, Sistemas Embebidos, Diseño)"
-                   styleClass="input-field"
-                   maxWidth="450"/>
-
-        <ScrollPane fitToWidth="true" styleClass="scroll-pane">
-            <VBox fx:id="boxResultados" spacing="12">
+    <!-- ENVOLVEMOS TODO EN UN STACKPANE PARA QUE SE EXPANDA -->
+    <center>
+        <StackPane>
+            <VBox spacing="20" alignment="TOP_CENTER" StackPane.alignment="TOP_CENTER">
                 <padding>
-                    <Insets top="10" left="10" right="10" bottom="10"/>
+                    <Insets top="20" left="25" right="25" bottom="20"/>
                 </padding>
-            </VBox>
-        </ScrollPane>
 
-    </VBox>
+                <Label text="Orientador de cursos" styleClass="title-text"/>
+
+                <ComboBox fx:id="comboMeta"
+                          promptText="Selecciona una meta..."
+                          styleClass="input-field"
+                          maxWidth="450"/>
+
+                <ScrollPane fitToWidth="true" fitToHeight="true" styleClass="scroll-pane">
+                    <VBox fx:id="boxResultados" spacing="12">
+                        <padding>
+                            <Insets top="10" bottom="10" left="10" right="10"/>
+                        </padding>
+                    </VBox>
+                </ScrollPane>
+
+            </VBox>
+        </StackPane>
+    </center>
+
 </BorderPane>

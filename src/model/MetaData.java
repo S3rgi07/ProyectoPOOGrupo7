@@ -56,4 +56,9 @@ public class MetaData {
     public static List<String> buscarCursos(String meta) {
         return META_CURSOS.getOrDefault(meta.toLowerCase(), new ArrayList<>());
     }
+
+    public static List<String> getMetas() {
+        return new ArrayList<>(META_CURSOS.keySet());
+    }
+
 }
