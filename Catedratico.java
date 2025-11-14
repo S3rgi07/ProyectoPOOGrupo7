@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.Objects;
 
+import src.model.Curso;
+import src.model.Upvotes;
+
 /**
  * Clase Catedratico
  * Incluye constructores compatibles con el controller:
@@ -48,6 +51,14 @@ public class Catedratico {
 
     public String getNombre() {
         return nombre;
+    }
+
+    public int getSemestres() {
+    return semestres;
+}
+
+    public void setSemestres(int semestres) {
+        this.semestres = semestres;
     }
 
     public void setNombre(String nombre) {
