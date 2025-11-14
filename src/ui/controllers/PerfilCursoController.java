@@ -19,14 +19,11 @@ public class PerfilCursoController implements SubControlador {
     @FXML
     private Label lblCodigo;
 
-    @FXML
-    private Label lblTipo;
+    // @FXML
+    // private Label lblTipo;
 
     @FXML
     private Label lblDescripcion;
-
-    @FXML
-    private Label lblCompetencias;
 
     @FXML
     private Button btnVolver;
@@ -60,18 +57,14 @@ public class PerfilCursoController implements SubControlador {
         this.curso = curso;
 
         lblNombre.setText(curso.getNombre());
-        lblCodigo.setText("Código: " + curso.getCodigo());
-        lblTipo.setText("Tipo: " + (curso.getTipo() == null ? "N/A" : curso.getTipo()));
+        lblCodigo.setText("Código: " + curso.getId());
+        // lblTipo.setText("Tipo: " + (curso.getTipo() == null ? "N/A" :
+        // curso.getTipo()));
 
         lblDescripcion.setText(
                 (curso.getDescripcion() == null || curso.getDescripcion().isEmpty())
                         ? "Sin descripción disponible."
                         : curso.getDescripcion());
-
-        lblCompetencias.setText(
-                (curso.getCompetencias() == null || curso.getCompetencias().isEmpty())
-                        ? "No se especificaron competencias."
-                        : curso.getCompetencias());
 
         cargarRankings();
 
@@ -82,7 +75,7 @@ public class PerfilCursoController implements SubControlador {
         boxRankingSemestres.getChildren().clear();
 
         // 1) Traer SIEMPRE los catedráticos desde la BD
-        java.util.List<Catedratico> catedraticos = service.obtenerCatedraticosPorCurso(curso.getCodigo());
+        java.util.List<Catedratico> catedraticos = service.obtenerCatedraticosPorCurso(curso.getId());
 
         if (catedraticos.isEmpty()) {
             Label lbl = new Label("Este curso aún no tiene catedráticos registrados.");

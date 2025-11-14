@@ -40,6 +40,7 @@ public class DashboardController {
     private StackPane contentPane;
 
     private Estudiante estudiante;
+
     private UVRateService service = new UVRateService();
 
     private Object controladorActual;
@@ -49,12 +50,11 @@ public class DashboardController {
     // =========================================================
     public void setEstudiante(Estudiante estudiante) {
         this.estudiante = estudiante;
-        nombreLabel.setText(estudiante.getNombre());
+        this.nombreLabel.setText(estudiante.getNombre());
 
-        // Avatar simple
-        avatar.setFill(Color.web("#6C63FF"));
+        // IMPORTANTE
+        service.setEstudiante(estudiante);
 
-        // Vista inicial
         cargarVista("catedraticos.fxml");
     }
 

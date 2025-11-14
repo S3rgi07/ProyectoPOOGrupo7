@@ -9,13 +9,8 @@ public class Estudiante {
     private String correo;
     private EstadoCursos estadoCursos;
 
-    // constructor
-    public Estudiante() {
-        this.estadoCursos = new EstadoCursos();
-    }
-
-    // constructor con parámetros
-    public Estudiante(String nombre, int carnet, String correo) {
+    public Estudiante(int id, String nombre, int carnet, String correo) {
+        this.id = id;
         this.nombre = nombre;
         this.carnet = carnet;
         this.correo = correo;

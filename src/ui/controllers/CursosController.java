@@ -53,7 +53,7 @@ public class CursosController implements SubControlador {
         for (Curso c : cursos) {
 
             if (!c.getNombre().toLowerCase().contains(filtro)
-                    && !String.valueOf(c.getCodigo()).contains(filtro))
+                    && !String.valueOf(c.getId()).contains(filtro))
                 continue;
 
             HBox card = crearCard(c);
@@ -79,7 +79,7 @@ public class CursosController implements SubControlador {
         Label nombre = new Label(c.getNombre());
         nombre.getStyleClass().add("card-title");
 
-        Label codigo = new Label("(" + c.getCodigo() + ")");
+        Label codigo = new Label("(" + c.getId() + ")");
         codigo.getStyleClass().add("card-upvotes");
 
         card.getChildren().addAll(nombre, codigo);

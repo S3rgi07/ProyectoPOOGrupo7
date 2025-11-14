@@ -96,7 +96,7 @@ public class Catedratico {
         // evita duplicados según id si es posible
         boolean existe = false;
         for (Curso c : this.cursos) {
-            if (c.getCodigo() == curso.getCodigo()) {
+            if (c.getId() == curso.getId()) {
                 existe = true;
                 break;
             }

@@ -81,7 +81,7 @@ public class PerfilCatedraticoController implements SubControlador {
             return;
 
         for (Curso curso : catedratico.getCursos()) {
-            Label lbl = new Label("• " + curso.getNombre() + " (" + curso.getCodigo() + ")");
+            Label lbl = new Label("• " + curso.getNombre() + " (" + curso.getId() + ")");
             lbl.getStyleClass().add("curso-item");
             listaCursos.getChildren().add(lbl);
         }
@@ -104,8 +104,9 @@ public class PerfilCatedraticoController implements SubControlador {
 
     private void toggleUpvote() {
 
+        int estudianteId = estudiante.getId();
         // 1) Actualizar BD
-        service.toggleUpvote(estudiante.getId(), catedratico.getId());
+        service.toggleUpvote(estudianteId, catedratico.getId());
 
         // 2) RECARGAR el catedrático actualizado desde la BD
         this.catedratico = service.obtenerCatedraticoPorId(catedratico.getId());
@@ -150,7 +151,7 @@ public class PerfilCatedraticoController implements SubControlador {
 
             int pos = service.obtenerPosicionCatedraticoEnCurso(
                     catedratico.getId(),
-                    c.getCodigo());
+                    c.getId());
 
             Label lbl = new Label(
                     c.getNombre() + ": " +

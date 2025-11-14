@@ -26,7 +26,6 @@ public class UVRateService {
     private Estudiante estudiante;
 
     public UVRateService() {
-        this.estudiante = estudiante;
     }
 
     // ===================== CATEDRÁTICOS =====================
@@ -53,6 +52,10 @@ public class UVRateService {
         }
 
         return lista;
+    }
+
+    public void setEstudiante(Estudiante estudiante) {
+        this.estudiante = estudiante;
     }
 
     /**
@@ -376,6 +379,7 @@ public class UVRateService {
         }
 
         return null;
+
     }
 
 }

@@ -51,12 +51,6 @@
         <Label fx:id="lblDescripcion" wrapText="true" styleClass="section-text" />
       </VBox>
 
-      <!-- Competencias -->
-      <VBox spacing="10" maxWidth="500">
-        <Label text="Competencias:" styleClass="section-title" />
-        <Label fx:id="lblCompetencias" wrapText="true" styleClass="section-text" />
-      </VBox>
-
       <HBox spacing="30" alignment="TOP_CENTER">
 
         <VBox spacing="10">

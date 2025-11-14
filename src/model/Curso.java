@@ -1,7 +1,7 @@
 package model;
 
 public class Curso {
-    private int codigo;
+    private int id;
     private String nombre;
     private String descripcion;
     private String competencias;
@@ -9,8 +9,8 @@ public class Curso {
     private Upvotes upvotesCurso;
 
     // Añade este constructor a Curso.java
-    public Curso(int codigo, String nombre, String descripcion) {
-        this.codigo = codigo;
+    public Curso(int id, String nombre, String descripcion) {
+        this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         // Inicializa los demás campos a valores por defecto
@@ -19,8 +19,12 @@ public class Curso {
         this.upvotesCurso = null; // O new Upvotes(0) si también aplica
     }
 
-    public int getCodigo() {
-        return codigo;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTipo() {
@@ -29,10 +33,6 @@ public class Curso {
 
     public Upvotes getUpvotes() {
         return upvotesCurso;
-    }
-
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
     }
 
     public void setTipo(String tipo) {
@@ -74,12 +74,12 @@ public class Curso {
         if (obj == null || getClass() != obj.getClass())
             return false;
         Curso curso = (Curso) obj;
-        return codigo == curso.codigo; // Compara cursos por su 'codigo'
+        return id == curso.id; // Compara cursos por su 'codigo'
     }
 
     @Override
     public int hashCode() {
-        return java.util.Objects.hash(codigo); // Genera un hash a partir del 'codigo'
+        return java.util.Objects.hash(id); // Genera un hash a partir del 'codigo'
     }
 
 }

@@ -104,10 +104,10 @@ public class LoginController {
             if (rs.next()) {
 
                 Estudiante estudiante = new Estudiante(
+                        rs.getInt("id"),
                         rs.getString("nombre"),
                         0,
-                        correo);
-                estudiante.setId(rs.getInt("id"));
+                        rs.getString("correo"));
 
                 abrirDashboard(estudiante);
 
