@@ -7,16 +7,34 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="ui.controllers.CursosController">
 
-    <VBox spacing="15" padding="20" alignment="CENTER_LEFT">
+    <center>
+        <VBox fx:id="rootBox"
+              spacing="15"
+              alignment="TOP_LEFT">
 
-        <TextField fx:id="searchField" 
-                   promptText="Buscar curso..."
-                   styleClass="search-field"/>
+            <padding>
+                <Insets top="20" bottom="20" left="20" right="20"/>
+            </padding>
 
-        <ScrollPane fitToWidth="true" styleClass="scroll-pane">
-            <VBox fx:id="listaCursos" spacing="10" padding="10"/>
-        </ScrollPane>
+            <TextField fx:id="searchField"
+                       promptText="Buscar curso..."
+                       styleClass="search-field"
+                       maxWidth="300"/>
 
-    </VBox>
+            <ScrollPane fx:id="scrollPane"
+                        fitToWidth="true"
+                        hbarPolicy="NEVER"
+                        vbarPolicy="AS_NEEDED">
+
+                <VBox fx:id="listaCursos" spacing="10">
+                    <padding>
+                        <Insets top="10" bottom="10" left="10" right="10"/>
+                    </padding>
+                </VBox>
+
+            </ScrollPane>
+
+        </VBox>
+    </center>
 
 </BorderPane>

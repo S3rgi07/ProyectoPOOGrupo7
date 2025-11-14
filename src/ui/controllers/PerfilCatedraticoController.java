@@ -1,7 +1,8 @@
 package ui.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import model.Catedratico;
 import model.Curso;
@@ -12,80 +13,119 @@ public class PerfilCatedraticoController implements SubControlador {
 
     @FXML
     private Label lblNombre;
+
     @FXML
     private Label lblUpvotes;
-    @FXML
-    private VBox listaCursos;
-    @FXML
-    private Button btnVolver;
+
     @FXML
     private Button btnUpvote;
 
-    private UVRateService service;
+    @FXML
+    private VBox listaCursos;
+
+    @FXML
+    private Button btnVolver;
+
+    private Catedratico catedratico;
     private Estudiante estudiante;
-    private DashboardController dashboard;
-    private Catedratico actual;
+    private UVRateService service;
+    private DashboardController dashboard; // ← ★ NECESARIO
 
-    @Override
-    public void setContext(Estudiante estudiante, UVRateService service) {
-        this.estudiante = estudiante;
-        this.service = service;
-    }
-
+    // ============================================================
+    // Recibir Dashboard desde el cargador de vistas
+    // ============================================================
     @Override
     public void setDashboard(DashboardController dashboard) {
         this.dashboard = dashboard;
     }
 
-    /** Recibido desde CatedraticosController */
-    public void cargarDatos(Catedratico c) {
-        this.actual = c;
+    // ============================================================
+    // Recibir contexto (estudiante + service)
+    // ============================================================
+    @Override
+    public void setContext(Estudiante est, UVRateService serv) {
+        this.estudiante = est;
+        this.service = serv;
 
-        lblNombre.setText(c.getNombre());
-        lblUpvotes.setText(String.valueOf(c.getCantidadUpvotes()));
+        // Acción del botón VOLVER
+        btnVolver.setOnAction(e -> dashboard.cargarVista("catedraticos.fxml"));
+    }
 
-        // mostrar cursos
+    // ============================================================
+    // Recibir catedrático
+    // ============================================================
+    public void setCatedratico(Catedratico cat) {
+        this.catedratico = cat;
+
+        lblNombre.setText(cat.getNombre());
+        lblUpvotes.setText(String.valueOf(service.contarUpvotes(cat.getId())));
+
+        cargarCursos();
+        configurarBotonUpvote();
+    }
+
+    // ============================================================
+    // Cargar cursos
+    // ============================================================
+    private void cargarCursos() {
         listaCursos.getChildren().clear();
-        for (Curso curso : c.getCursos()) {
-            Label item = new Label("• " + curso.getNombre());
-            item.getStyleClass().add("curso-item");
-            listaCursos.getChildren().add(item);
-        }
 
-        // actualizar apariencia de botón
-        actualizarBotonUpvote();
+        if (catedratico.getCursos() == null)
+            return;
 
-        // actions
-        btnVolver.setOnAction(e -> dashboard.cargarVista("catedraticos"));
-        btnUpvote.setOnAction(e -> toggleUpvote());
-    }
-
-    /** Cambia el estilo según si el estudiante ya votó */
-    private void actualizarBotonUpvote() {
-        boolean yaVoto = service.estudianteYaUpvoteo(estudiante, actual);
-
-        if (yaVoto) {
-            btnUpvote.setText("✓ Upvoted");
-            btnUpvote.getStyleClass().remove("btn-upvote-default");
-            btnUpvote.getStyleClass().add("btn-upvote-active");
-        } else {
-            btnUpvote.setText("❤️ Upvote");
-            btnUpvote.getStyleClass().remove("btn-upvote-active");
-            btnUpvote.getStyleClass().add("btn-upvote-default");
+        for (Curso curso : catedratico.getCursos()) {
+            Label lbl = new Label("• " + curso.getNombre() + " (" + curso.getCodigo() + ")");
+            lbl.getStyleClass().add("curso-item");
+            listaCursos.getChildren().add(lbl);
         }
     }
 
-    /** Maneja dar o quitar upvote */
+    // ============================================================
+    // Configurar Upvote
+    // ============================================================
+    private void configurarBotonUpvote() {
+
+        boolean yaVoto = service.yaVoto(estudiante.getId(), catedratico.getId());
+
+        if (yaVoto)
+            activarEstiloVotado();
+        else
+            activarEstiloNormal();
+
+        btnUpvote.setOnAction(event -> toggleUpvote());
+    }
+
     private void toggleUpvote() {
-        boolean yaVoto = service.estudianteYaUpvoteo(estudiante, actual);
 
-        if (yaVoto) {
-            service.quitarUpvote(estudiante, actual);
-        } else {
-            service.darUpvote(estudiante, actual);
-        }
+        service.toggleUpvote(estudiante.getId(), catedratico.getId());
 
-        lblUpvotes.setText(String.valueOf(actual.getCantidadUpvotes()));
-        actualizarBotonUpvote();
+        boolean yaVoto = service.yaVoto(estudiante.getId(), catedratico.getId());
+
+        if (yaVoto)
+            activarEstiloVotado();
+        else
+            activarEstiloNormal();
+
+        lblUpvotes.setText(String.valueOf(service.contarUpvotes(catedratico.getId())));
     }
+
+    // ============================================================
+    // Estilos
+    // ============================================================
+    private void activarEstiloNormal() {
+        btnUpvote.getStyleClass().remove("btn-upvote-voted");
+        if (!btnUpvote.getStyleClass().contains("btn-upvote"))
+            btnUpvote.getStyleClass().add("btn-upvote");
+
+        btnUpvote.setText("Upvote"); // favorite_border
+    }
+
+    private void activarEstiloVotado() {
+        btnUpvote.getStyleClass().remove("btn-upvote");
+        if (!btnUpvote.getStyleClass().contains("btn-upvote-voted"))
+            btnUpvote.getStyleClass().add("btn-upvote-voted");
+
+        btnUpvote.setText("Quitar Upvote"); // favorite
+    }
+
 }

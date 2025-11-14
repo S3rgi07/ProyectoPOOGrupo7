@@ -1,19 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="ui.controllers.PerfilCursoController"
-      spacing="15" padding="25" alignment="TOP_LEFT">
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+  fx:controller="ui.controllers.PerfilCursoController"
+  styleClass="perfil-root"
+  fx:id="perfilCursoRoot">
 
-    <Label fx:id="nombreLabel" styleClass="profile-title"/>
 
-    <Label fx:id="descLabel" wrapText="true" styleClass="profile-text"/>
+  <!-- ===================== TOP BAR ===================== -->
+  <top>
+    <HBox spacing="10" alignment="CENTER_LEFT" styleClass="perfil-topbar">
+      <padding>
+        <Insets top="15" bottom="15" left="20" right="20" />
+      </padding>
 
-    <Label text="Catedráticos que imparten este curso:" styleClass="section-title"/>
+      <Button fx:id="btnVolver"
+        text="Volver"
+        styleClass="btn-volver" />
+    </HBox>
+  </top>
 
-    <VBox fx:id="listaCatedraticos" spacing="8"/>
+  <!-- ===================== CONTENIDO CENTRAL ===================== -->
+  <center>
+    <VBox spacing="25" alignment="TOP_CENTER" styleClass="perfil-card">
+      <padding>
+        <Insets top="30" bottom="30" left="40" right="40" />
+      </padding>
 
-</VBox>
+      <!-- Nombre -->
+      <Label fx:id="lblNombre" styleClass="perfil-nombre" />
+
+      <!-- Código -->
+      <Label fx:id="lblCodigo" styleClass="curso-codigo" />
+
+      <!-- Tipo -->
+      <Label fx:id="lblTipo" styleClass="curso-tipo" />
+
+      <!-- Descripción -->
+      <VBox spacing="10" maxWidth="500">
+        <Label text="Descripción:" styleClass="section-title" />
+        <Label fx:id="lblDescripcion" wrapText="true" styleClass="section-text" />
+      </VBox>
+
+      <!-- Competencias -->
+      <VBox spacing="10" maxWidth="500">
+        <Label text="Competencias:" styleClass="section-title" />
+        <Label fx:id="lblCompetencias" wrapText="true" styleClass="section-text" />
+      </VBox>
+
+    </VBox>
+  </center>
+
+</BorderPane>

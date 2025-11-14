@@ -39,6 +39,8 @@ public class DashboardController {
     private Estudiante estudiante;
     private UVRateService service = new UVRateService();
 
+    private Object controladorActual;
+
     // =========================================================
     // Recibir estudiante desde Login
     // =========================================================
@@ -69,9 +71,17 @@ public class DashboardController {
         // Se hará cuando la escena exista
         contentPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
-                newScene.getRoot().setUserData(this);
+
+                newScene.getStylesheets().clear();
+
+                // CSS global
+                newScene.getStylesheets().add(
+                        getClass().getResource("/ui/views/styles/common.css").toExternalForm());
+                newScene.getStylesheets().add(
+                        getClass().getResource("/ui/views/styles/light.css").toExternalForm());
             }
         });
+
     }
 
     // =========================================================
@@ -84,9 +94,31 @@ public class DashboardController {
 
             Pane vista = loader.load();
 
-            // Pasar estudiante + service si el controlador es un SubControlador
-            if (loader.getController() instanceof SubControlador sub) {
+            controladorActual = loader.getController();
+
+            if (controladorActual instanceof SubControlador sub) {
                 sub.setContext(estudiante, service);
+                sub.setDashboard(this);
+            }
+
+            // limpiar CSS del node root
+            vista.getStylesheets().clear();
+
+            // agregar CSS común
+            vista.getStylesheets().add(
+                    getClass().getResource("/ui/views/styles/common.css").toExternalForm());
+            vista.getStylesheets().add(
+                    getClass().getResource("/ui/views/styles/light.css").toExternalForm());
+
+            // agregar CSS especial
+            if (fxml.equals("perfil_catedratico.fxml")) {
+                vista.getStylesheets().add(
+                        getClass().getResource("/ui/views/styles/perfil_catedratico.css").toExternalForm());
+            }
+
+            if (fxml.equals("perfil_curso.fxml")) {
+                vista.getStylesheets().add(
+                        getClass().getResource("/ui/views/styles/perfil_curso.css").toExternalForm());
             }
 
             contentPane.getChildren().setAll(vista);
@@ -101,7 +133,27 @@ public class DashboardController {
     // Cargar vista DIRECTA (por ejemplo: perfil de catedrático)
     // =========================================================
     public void cargarVistaDirecta(Pane vista) {
-        contentPane.getChildren().setAll(vista);
+        try {
+            // limpiar CSS del node root
+            vista.getStylesheets().clear();
+
+            // agregar CSS común
+            vista.getStylesheets().add(
+                    getClass().getResource("/ui/views/styles/common.css").toExternalForm());
+            vista.getStylesheets().add(
+                    getClass().getResource("/ui/views/styles/light.css").toExternalForm());
+
+            // agregar CSS especial si es perfil curso
+            if (vista.getId() != null && vista.getId().equals("perfilCursoRoot")) {
+                vista.getStylesheets().add(
+                        getClass().getResource("/ui/views/styles/perfil_curso.css").toExternalForm());
+            }
+
+            contentPane.getChildren().setAll(vista);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // =========================================================
@@ -122,6 +174,10 @@ public class DashboardController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public Object getControladorActual() {
+        return controladorActual;
     }
 
 }

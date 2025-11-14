@@ -4,44 +4,45 @@
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
-    fx:controller="ui.controllers.PerfilCatedraticoController"
-    spacing="20" alignment="TOP_CENTER"
-    styleClass="perfil-root">
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ui.controllers.PerfilCatedraticoController"
+            styleClass="perfil-root">
 
-    <padding>
-        <Insets top="25" right="25" bottom="25" left="25" />
-    </padding>
-
-    <!-- Nombre del catedrático -->
-    <Label fx:id="lblNombre"
-        styleClass="perfil-nombre" />
-
-    <!-- Upvotes generales -->
-    <HBox spacing="8" alignment="CENTER">
-        <Label text="❤️" styleClass="heart" />
-        <Label fx:id="lblUpvotes" styleClass="upvote-count" />
-    </HBox>
-
-    <!-- Botón de Upvote -->
-    <Button fx:id="btnUpvote"
-        text="❤️ Upvote"
-        styleClass="btn-upvote" />
-
-
-    <!-- Cursos del catedrático -->
-    <VBox spacing="10" alignment="TOP_LEFT" maxWidth="420">
-        <padding>
-            <Insets top="0" right="0" bottom="0" left="0" />
-        </padding>
-
-        <Label text="Cursos impartidos:" styleClass="section-title" />
-
-        <VBox fx:id="listaCursos" spacing="6">
+    <top>
+        <HBox spacing="10" alignment="CENTER_LEFT" styleClass="perfil-topbar">
             <padding>
-                <Insets top="0" right="0" bottom="0" left="0" />
+                <Insets top="15" bottom="15" left="20" right="20" />
             </padding>
-        </VBox>
-    </VBox>
 
-</VBox>
+            <Button fx:id="btnVolver"
+                    text="⟵ Volver"
+                    styleClass="btn-volver" />
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="25" alignment="TOP_CENTER" styleClass="perfil-card">
+            <padding>
+                <Insets top="30" bottom="30" left="40" right="40"/>
+            </padding>
+
+            <Label fx:id="lblNombre" styleClass="perfil-nombre"/>
+
+            <HBox spacing="12" alignment="CENTER">
+                <Label fx:id="lblUpvotes" styleClass="upvote-count"/>
+            </HBox>
+
+            <Button fx:id="btnUpvote"
+                    text="Upvote"
+                    styleClass="btn-upvote"
+                    prefWidth="180"/>
+
+            <VBox spacing="15" maxWidth="480">
+                <Label text="Cursos impartidos:" styleClass="section-title"/>
+                <VBox fx:id="listaCursos" spacing="8"/>
+            </VBox>
+
+        </VBox>
+    </center>
+
+</BorderPane>

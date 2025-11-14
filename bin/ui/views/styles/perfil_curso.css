@@ -1,0 +1,63 @@
+/* ===== CARD ROOT ===== */
+.perfil-root {
+    -fx-background-color: transparent;
+}
+
+/* ===== TOP BAR ===== */
+.perfil-topbar {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* ===== BACK BUTTON ===== */
+.btn-volver {
+    -fx-background-color: #3b82f6;
+    -fx-text-fill: white;
+    -fx-background-radius: 12;
+    -fx-font-size: 14px;
+    -fx-padding: 8 16;
+}
+
+.btn-volver:hover {
+    -fx-background-color: #2563eb;
+}
+
+/* ===== CARD ===== */
+.perfil-card {
+    -fx-background-color: white;
+    -fx-background-radius: 18;
+    -fx-border-radius: 18;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 16, 0.25, 0, 6);
+}
+
+/* ===== NAME ===== */
+.perfil-nombre {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1e293b;
+}
+
+/* ===== TITLE SECTIONS ===== */
+.section-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1e293b;
+}
+
+/* ===== SECTION TEXT ===== */
+.section-text {
+    -fx-font-size: 15px;
+    -fx-text-fill: #475569;
+}
+
+/* ===== COURSE DETAILS ===== */
+.curso-codigo {
+    -fx-font-size: 16px;
+    -fx-text-fill: #475569;
+}
+
+.curso-tipo {
+    -fx-font-size: 16px;
+    -fx-text-fill: #64748b;
+}

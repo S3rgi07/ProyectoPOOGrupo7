@@ -1,53 +1,67 @@
 package ui.controllers;
 
-import javafx.fxml.*;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import model.Catedratico;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import model.Curso;
 import model.Estudiante;
 import service.UVRateService;
 
-import java.util.List;
-
-public class PerfilCursoController {
+public class PerfilCursoController implements SubControlador {
 
     @FXML
-    private Label nombreLabel;
-    @FXML
-    private Label descLabel;
-    @FXML
-    private VBox listaCatedraticos;
+    private Label lblNombre;
 
-    private UVRateService service;
+    @FXML
+    private Label lblCodigo;
+
+    @FXML
+    private Label lblTipo;
+
+    @FXML
+    private Label lblDescripcion;
+
+    @FXML
+    private Label lblCompetencias;
+
+    @FXML
+    private Button btnVolver;
+
     private Estudiante estudiante;
+    private UVRateService service;
+    private DashboardController dashboard;
 
-    public void setContext(Estudiante estudiante, UVRateService service, Curso curso) {
-        this.service = service;
-        this.estudiante = estudiante;
+    private Curso curso;
 
-        nombreLabel.setText(curso.getNombre());
-        descLabel.setText(curso.getDescripcion());
-
-        cargarCatedraticos(curso);
+    @Override
+    public void setDashboard(DashboardController dashboard) {
+        this.dashboard = dashboard;
     }
 
-    private void cargarCatedraticos(Curso curso) {
-        listaCatedraticos.getChildren().clear();
+    @Override
+    public void setContext(Estudiante est, UVRateService serv) {
+        this.estudiante = est;
+        this.service = serv;
 
-        List<Catedratico> lista = service.obtenerCatedraticosPorCurso(curso.getCodigo());
+        // Acción de volver
+        btnVolver.setOnAction(e -> dashboard.cargarVista("cursos.fxml"));
+    }
 
-        for (Catedratico cat : lista) {
-            HBox card = new HBox();
-            card.getStyleClass().add("card");
+    public void setCurso(Curso curso) {
+        this.curso = curso;
 
-            Label label = new Label(cat.getNombre() + "   ❤️ " + cat.getUpvotes().getUpvotes());
-            label.getStyleClass().add("card-title");
+        lblNombre.setText(curso.getNombre());
+        lblCodigo.setText("Código: " + curso.getCodigo());
+        lblTipo.setText("Tipo: " + (curso.getTipo() == null ? "N/A" : curso.getTipo()));
 
-            card.getChildren().add(label);
-            listaCatedraticos.getChildren().add(card);
+        lblDescripcion.setText(
+                (curso.getDescripcion() == null || curso.getDescripcion().isEmpty())
+                        ? "Sin descripción disponible."
+                        : curso.getDescripcion());
 
-            // TODO: Abrir perfil de catedrático
-        }
+        lblCompetencias.setText(
+                (curso.getCompetencias() == null || curso.getCompetencias().isEmpty())
+                        ? "No se especificaron competencias."
+                        : curso.getCompetencias());
     }
 }

@@ -1,6 +1,7 @@
 package ui.controllers;
 
 import javafx.fxml.*;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import model.Catedratico;
@@ -64,7 +65,7 @@ public class CatedraticosController implements SubControlador {
         Label nombre = new Label(c.getNombre());
         nombre.getStyleClass().add("card-title");
 
-        Label upv = new Label("❤️ " + c.getUpvotes().getUpvotes());
+        Label upv = new Label("" + c.getUpvotes().getUpvotes());
         upv.getStyleClass().add("card-upvotes");
 
         box.getChildren().addAll(nombre, upv);
@@ -75,21 +76,19 @@ public class CatedraticosController implements SubControlador {
 
     }
 
-    private void abrirPerfil(Catedratico c) {
+    public void abrirPerfil(Catedratico cat) {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/ui/views/perfil_catedratico.fxml"));
-            Pane vista = loader.load();
+            // 1) Cargar vista desde Dashboard (UNA SOLA VEZ)
+            dashboard.cargarVista("perfil_catedratico.fxml");
 
-            // Pasar el catedrático al controlador del perfil
-            PerfilCatedraticoController controller = loader.getController();
-            controller.setCatedratico(c);
+            // 2) Obtener el controlador que el Dashboard acaba de cargar
+            PerfilCatedraticoController controller = (PerfilCatedraticoController) dashboard.getControladorActual();
 
-            // Obtener el DashboardController
-            DashboardController dash = (DashboardController) listaCatedraticos.getScene().getRoot().getUserData();
+            // 3) Pasar contexto primero
+            controller.setContext(estudiante, service);
 
-            // Mostrar la vista dentro del dashboard
-            dash.cargarVistaDirecta(vista);
+            // 4) Luego pasar catedrático
+            controller.setCatedratico(cat);
 
         } catch (Exception e) {
             e.printStackTrace();
