@@ -103,64 +103,58 @@ public class PerfilCatedraticoController implements SubControlador {
     }
 
     private void toggleUpvote() {
-        try {
-            // 1. Cambiar en la BD
-            service.toggleUpvote(estudiante.getId(), catedratico.getId());
 
-            // 2. Obtener datos ACTUALIZADOS del catedrático
-            Catedratico actualizado = service.obtenerCatedraticoPorId(catedratico.getId());
+        // Actualizar en DB
+        service.toggleUpvote(estudiante.getId(), catedratico.getId());
 
-            // 3. Recargar el FXML
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/ui/views/perfil_catedratico.fxml"));
+        // Obtener nuevo estado
+        boolean yaVoto = service.yaVoto(estudiante.getId(), catedratico.getId());
+        int nuevosUpvotes = service.contarUpvotes(catedratico.getId());
 
-            Pane vista = loader.load(); // ← YA NO ES VBox
+        // Actualizar label
+        lblUpvotes.setText(String.valueOf(nuevosUpvotes));
 
-            PerfilCatedraticoController controller = loader.getController();
+        // Actualizar botón
+        if (yaVoto)
+            activarEstiloVotado();
+        else
+            activarEstiloNormal();
 
-            // 4. Pasar contexto y dashboard otra vez
-            controller.setDashboard(dashboard);
-            controller.setContext(estudiante, service);
-
-            // 5. Pasar el catedrático ACTUALIZADO
-            controller.setCatedratico(actualizado);
-
-            // 6. Mostrar vista refrescada
-            dashboard.cargarVistaDirecta(vista);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // ✨ Volver a generar el ranking SIN recargar pantalla
+        cargarRankingsPorCurso();
     }
 
     // ============================================================
     // Estilos
     // ============================================================
     private void activarEstiloNormal() {
+        btnUpvote.getStyleClass().remove("btn-upvote");
         btnUpvote.getStyleClass().remove("btn-upvote-voted");
-        if (!btnUpvote.getStyleClass().contains("btn-upvote"))
-            btnUpvote.getStyleClass().add("btn-upvote");
 
-        btnUpvote.setText("Upvote"); // favorite_border
+        btnUpvote.getStyleClass().add("btn-upvote");
+        btnUpvote.setText("Upvote");
     }
 
     private void activarEstiloVotado() {
         btnUpvote.getStyleClass().remove("btn-upvote");
-        if (!btnUpvote.getStyleClass().contains("btn-upvote-voted"))
-            btnUpvote.getStyleClass().add("btn-upvote-voted");
+        btnUpvote.getStyleClass().remove("btn-upvote-voted");
 
-        btnUpvote.setText("Quitar Upvote"); // favorite
+        btnUpvote.getStyleClass().add("btn-upvote-voted");
+        btnUpvote.setText("Quitar Upvote");
     }
 
     private void cargarRankingsPorCurso() {
         boxRankingCursos.getChildren().clear();
 
         for (Curso c : catedratico.getCursos()) {
+
             int pos = service.obtenerPosicionCatedraticoEnCurso(catedratico.getId(), c.getCodigo());
 
             Label lbl = new Label(
                     c.getNombre() + ": " +
                             (pos == -1 ? "No aparece en ranking" : "Posición #" + pos));
+
+            lbl.getStyleClass().add("ranking-item");
 
             boxRankingCursos.getChildren().add(lbl);
         }
