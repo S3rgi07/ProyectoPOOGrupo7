@@ -84,6 +84,8 @@ public class UVRateService {
                 String nombre = rs.getString("nombre");
                 int totalUpvotes = rs.getInt("total_upvotes");
 
+                catedratico.setSemestres(rs.getInt("semestres"));
+
                 Upvotes upvotes = new Upvotes(totalUpvotes);
                 ArrayList<Curso> cursos = new ArrayList<>();
                 cursos.add(obtenerCurso(idCurso));
