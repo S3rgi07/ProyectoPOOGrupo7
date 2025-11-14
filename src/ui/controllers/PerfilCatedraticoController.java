@@ -104,23 +104,23 @@ public class PerfilCatedraticoController implements SubControlador {
 
     private void toggleUpvote() {
 
-        // Actualizar en DB
+        // 1) Actualizar BD
         service.toggleUpvote(estudiante.getId(), catedratico.getId());
 
-        // Obtener nuevo estado
+        // 2) RECARGAR el catedrático actualizado desde la BD
+        this.catedratico = service.obtenerCatedraticoPorId(catedratico.getId());
+
+        // 3) Actualizar label
+        lblUpvotes.setText(String.valueOf(service.contarUpvotes(catedratico.getId())));
+
+        // 4) Actualizar botón
         boolean yaVoto = service.yaVoto(estudiante.getId(), catedratico.getId());
-        int nuevosUpvotes = service.contarUpvotes(catedratico.getId());
-
-        // Actualizar label
-        lblUpvotes.setText(String.valueOf(nuevosUpvotes));
-
-        // Actualizar botón
         if (yaVoto)
             activarEstiloVotado();
         else
             activarEstiloNormal();
 
-        // ✨ Volver a generar el ranking SIN recargar pantalla
+        // 5) REGENERAR ranking con los datos nuevos
         cargarRankingsPorCurso();
     }
 
@@ -148,13 +148,13 @@ public class PerfilCatedraticoController implements SubControlador {
 
         for (Curso c : catedratico.getCursos()) {
 
-            int pos = service.obtenerPosicionCatedraticoEnCurso(catedratico.getId(), c.getCodigo());
+            int pos = service.obtenerPosicionCatedraticoEnCurso(
+                    catedratico.getId(),
+                    c.getCodigo());
 
             Label lbl = new Label(
                     c.getNombre() + ": " +
                             (pos == -1 ? "No aparece en ranking" : "Posición #" + pos));
-
-            lbl.getStyleClass().add("ranking-item");
 
             boxRankingCursos.getChildren().add(lbl);
         }
